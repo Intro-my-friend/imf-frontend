@@ -1,4 +1,4 @@
-import $ from './page.module.css'
+import $ from './page.module.scss'
 
 export default function Login(){
     return(
