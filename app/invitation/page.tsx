@@ -9,8 +9,9 @@ export default function Invitation(){
                 <div className={$['sub-title']}>
                     휴대폰 번호
                 </div>
-                <div className={$.continue}>
-                    카카오로 계속하기
+                <div className={$['input-wrapper']}>
+                    <input className={$.input} placeholder={"전화번호를 입력해주세요."} />
+                    <button className={$.send}>인증번호 받기</button>
                 </div>
             </div>
         </div>
