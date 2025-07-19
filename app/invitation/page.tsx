@@ -2,11 +2,11 @@
 
 import $ from './page.module.scss'
 import Header from "@/component/Header";
-import {useMutation, useQuery} from "@tanstack/react-query";
+// import {useMutation, useQuery} from "@tanstack/react-query";
 import {useState} from "react";
-import {fetchVerificationCodes} from "@/app/services/users";
+// import {fetchVerificationCodes} from "@/app/services/users";
 
-export default async function Invitation(){
+export default function Invitation(){
     const [phoneNumber, setPhoneNumber]=useState("")
     // const { data, isLoading, error } = useMutation({
     //     queryKey: ['fetchVerificationCodes', phoneNumber],
