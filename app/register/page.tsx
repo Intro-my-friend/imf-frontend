@@ -61,7 +61,7 @@ export default function Invitation(){
                     <button className={$.send} onClick={handleVerifyClick}>인증</button>
                 </div>
             </div>
-            <Link className={$.next} href={"/"}>다음 단계</Link>
+            <Link className={$.next} href={"/purpose"}>다음 단계</Link>
         </div>
     )
 }
