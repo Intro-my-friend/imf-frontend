@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 export default function AuthCallback() {
     const router = useRouter();
 
+
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
@@ -17,8 +18,7 @@ export default function AuthCallback() {
                     return res.json();
                 })
                 .then(data => {
-                    const token = data.access_token;
-                    console.log(data,'데이타')
+                    const token = data.data.token;
                     if (token) {
                         localStorage.setItem("jwt", token);
                         router.replace("/");

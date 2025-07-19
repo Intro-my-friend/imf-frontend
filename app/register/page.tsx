@@ -7,16 +7,22 @@ import {useState} from "react";
 import {fetchVerification, fetchVerificationCodes} from "@/services/users";
 import classNames from "classnames";
 
+import Link from "next/link";
+
 export default function Invitation(){
     const [phoneNumber, setPhoneNumber]=useState("")
     const [verificationNumber, setVerificationNumber]=useState("")
     const useVerificationCodesMutation = useMutation({
         mutationFn:(params:{phoneNumber:string})=>{
-            return fetchVerificationCodes(params.phoneNumber)}
+            const token = localStorage.getItem("jwt");
+            if (!token) throw new Error("토큰 없음");
+            return fetchVerificationCodes(params.phoneNumber,token)}
     })
     const useVerificationMutation = useMutation({
         mutationFn:(params:{phoneNumber:string,verificationNumber:string})=>{
-            return fetchVerification(params.phoneNumber,params.verificationNumber)
+            const token = localStorage.getItem("jwt");
+            if (!token) throw new Error("토큰 없음");
+            return fetchVerification(params.phoneNumber,params.verificationNumber,token)
         }
     })
 
@@ -44,7 +50,7 @@ export default function Invitation(){
                     휴대폰 번호
                 </div>
                 <div className={$['input-wrapper']}>
-                    <input className={$.input} placeholder={"전화번호를 입력해주세요."} onChange={handlePhoneChange} />
+                    <input className={$.input} placeholder={"전화번호를 입력해주세요."} onChange={handlePhoneChange} type={"number"} />
                     <button className={$.send} onClick={handleCodeClick}>인증번호 받기</button>
                 </div>
                 <div className={classNames($['sub-title'],$['verification'])}>
@@ -55,6 +61,7 @@ export default function Invitation(){
                     <button className={$.send} onClick={handleVerifyClick}>인증</button>
                 </div>
             </div>
+            <Link className={$.next} href={"/"}>다음 단계</Link>
         </div>
     )
 }
