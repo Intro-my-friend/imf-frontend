@@ -2,6 +2,7 @@
 
   .phone-wrapper{
     padding: 0 20px;
+    margin-top: calc(50% + 56px);
 
     .sub-title{
       margin-bottom: 8px;
@@ -12,8 +13,10 @@
 
     .input-wrapper{
       display: flex;
-      gap:12px;
+      gap:8px;
+
       .input{
+        width: 65%;
         border:1px solid #e0e0e0;
         border-radius: 12px;
         padding:12px;
@@ -24,6 +27,7 @@
       }
 
       .send{
+        width: 36%;
         border:none;
         background: #ff7968;
         border-radius: 12px;
