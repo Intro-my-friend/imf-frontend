@@ -1,15 +1,11 @@
-import $ from './style.module.scss'
+import $ from "./style.module.scss";
 
 type Props = {
-    text:string;
-}
+  text: string;
+};
 
-function Header({text}:Props) {
-    return(
-        <div className={$.header}>
-            {text}
-        </div>
-    )
+function Header({ text }: Props) {
+  return <div className={$.header}>{text}</div>;
 }
 
 export default Header;
