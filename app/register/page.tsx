@@ -3,30 +3,46 @@
 import { useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import Header from "@/component/Header";
 import { withJwt } from "@/lib/authToken";
-import { fetchVerification, fetchVerificationCodes } from "@/services/users";
+import {
+  fetchUserVerification,
+  fetchUserVerificationCodes,
+} from "@/services/users";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 
 import $ from "./page.module.scss";
 
 export default function Invitation() {
+  const router = useRouter();
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [verificationNumber, setVerificationNumber] = useState("");
   const useVerificationCodesMutation = useMutation({
     mutationFn: withJwt((token, params: { phoneNumber: string }) =>
-      fetchVerificationCodes(params.phoneNumber, token),
+      fetchUserVerificationCodes(params.phoneNumber, token),
     ),
   });
 
   const useVerificationMutation = useMutation({
     mutationFn: withJwt(
       (token, params: { phoneNumber: string; verificationNumber: string }) =>
-        fetchVerification(params.phoneNumber, params.verificationNumber, token),
+        fetchUserVerification(
+          params.phoneNumber,
+          params.verificationNumber,
+          token,
+        ),
     ),
   });
+
+  const handleNextStep = () => {
+    localStorage.setItem("verificationNumber", verificationNumber);
+    localStorage.setItem("phoneNumber", phoneNumber);
+    router.push("/purpose");
+  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);
@@ -74,9 +90,9 @@ export default function Invitation() {
           </button>
         </div>
       </div>
-      <Link className={$.next} href={"/purpose"}>
+      <button className={$.next} onClick={handleNextStep}>
         다음 단계
-      </Link>
+      </button>
     </div>
   );
 }

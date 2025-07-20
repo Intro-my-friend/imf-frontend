@@ -1,16 +1,76 @@
 "use client";
 
+import { useState } from "react";
+
+import Link from "next/link";
+
 import Header from "@/component/Header";
+import { withJwt } from "@/lib/authToken";
+import { fetchUserRegist, fetchUserVerificationCodes } from "@/services/users";
+import { useMutation } from "@tanstack/react-query";
+import classNames from "classnames";
 
 import $ from "./style.module.scss";
 
 export default function Purpose() {
+  const [purpose, setPurpose] = useState("only");
+
+  const useUserRegistMutation = useMutation({
+    mutationFn: withJwt(
+      (
+        token,
+        params: {
+          introduction: boolean;
+          verificationNumber: string;
+          phoneNumber: string;
+        },
+      ) =>
+        fetchUserRegist(
+          params.introduction,
+          params.verificationNumber,
+          params.phoneNumber,
+          token,
+        ),
+    ),
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPurpose(e.target.value);
+  };
+
+  const handleRegisterClick = () => {
+    console.log(
+      "asdf",
+      localStorage.getItem("verificationNumber"),
+      localStorage.getItem("phoneNumber"),
+    );
+    useUserRegistMutation.mutate({
+      introduction: purpose === "with",
+      verificationNumber: "123",
+      phoneNumber: "456",
+    });
+  };
+
   return (
     <div className={$.purpose}>
       <Header text={"사용 목적"} />
       <div className={$["only-with"]}>
         <div className={$.only}>
-          <div className={$.radio}></div>
+          <label className={$["circle-radio-label"]}>
+            <input
+              type="radio"
+              value={"only"}
+              checked={purpose === "only"}
+              onChange={handleChange}
+              className={$["circle-radio-input"]}
+            />
+            <span
+              className={classNames(
+                $["circle-radio"],
+                purpose === "only" && $.checked,
+              )}
+            />
+          </label>
           <div className={$.infos}>
             <div className={$.title}>주선만 하기</div>
             <div className={$.description}>
@@ -19,7 +79,21 @@ export default function Purpose() {
           </div>
         </div>
         <div className={$.with}>
-          <div className={$.radio}></div>
+          <label className={$["circle-radio-label"]}>
+            <input
+              type="radio"
+              value={"with"}
+              checked={purpose === "with"}
+              onChange={handleChange}
+              className={$["circle-radio-input"]}
+            />
+            <span
+              className={classNames(
+                $["circle-radio"],
+                purpose === "with" && $.checked,
+              )}
+            />
+          </label>
           <div className={$.infos}>
             <div className={$.title}>주선하면서 소개도 받기</div>
             <div className={$.description}>
@@ -27,7 +101,16 @@ export default function Purpose() {
             </div>
           </div>
         </div>
+        <div className={$.guide}>
+          <div className={$.title}>안내사항</div>
+          <div className={$.description}>
+            언제든지 마이페이지에서 변경할 수 있습니다
+          </div>
+        </div>
       </div>
+      <button className={$.next} onClick={handleRegisterClick}>
+        가입 완료
+      </button>
     </div>
   );
 }

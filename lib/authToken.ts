@@ -4,13 +4,11 @@ function getJwtOrThrow() {
   return token;
 }
 
-function withJwt<TParams extends any[], TResult>(
-  fn: (token: string, ...args: TParams) => TResult,
+export function withJwt<TParams, TResult>(
+  fn: (token: string, params: TParams) => TResult,
 ) {
-  return (...args: TParams) => {
+  return (params: TParams) => {
     const token = getJwtOrThrow();
-    return fn(token, ...args);
+    return fn(token, params);
   };
 }
-
-export { withJwt };
