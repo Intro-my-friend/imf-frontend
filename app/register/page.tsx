@@ -5,6 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import Header from "@/component/Header";
+import { withJwt } from "@/lib/authToken";
 import { fetchVerification, fetchVerificationCodes } from "@/services/users";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -15,25 +16,16 @@ export default function Invitation() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [verificationNumber, setVerificationNumber] = useState("");
   const useVerificationCodesMutation = useMutation({
-    mutationFn: (params: { phoneNumber: string }) => {
-      const token = localStorage.getItem("jwt");
-      if (!token) throw new Error("토큰 없음");
-      return fetchVerificationCodes(params.phoneNumber, token);
-    },
+    mutationFn: withJwt((token, params: { phoneNumber: string }) =>
+      fetchVerificationCodes(params.phoneNumber, token),
+    ),
   });
+
   const useVerificationMutation = useMutation({
-    mutationFn: (params: {
-      phoneNumber: string;
-      verificationNumber: string;
-    }) => {
-      const token = localStorage.getItem("jwt");
-      if (!token) throw new Error("토큰 없음");
-      return fetchVerification(
-        params.phoneNumber,
-        params.verificationNumber,
-        token,
-      );
-    },
+    mutationFn: withJwt(
+      (token, params: { phoneNumber: string; verificationNumber: string }) =>
+        fetchVerification(params.phoneNumber, params.verificationNumber, token),
+    ),
   });
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
