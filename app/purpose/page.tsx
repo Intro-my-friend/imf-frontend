@@ -39,15 +39,13 @@ export default function Purpose() {
   };
 
   const handleRegisterClick = () => {
-    console.log(
-      "asdf",
-      localStorage.getItem("verificationNumber"),
-      localStorage.getItem("phoneNumber"),
-    );
+    const verificationNumber = localStorage.getItem("verificationNumber") || "";
+    const phoneNumber = localStorage.getItem("phoneNumber") || "";
+
     useUserRegistMutation.mutate({
       introduction: purpose === "with",
-      verificationNumber: "123",
-      phoneNumber: "456",
+      verificationNumber,
+      phoneNumber,
     });
   };
 
