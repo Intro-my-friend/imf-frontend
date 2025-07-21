@@ -1,0 +1,11 @@
+.profile {
+  .progress-bar {
+    height: 8px;
+    border-radius: 50px;
+    background: #ff9877;
+
+    &.step-1 {
+      width: 25%;
+    }
+  }
+}
