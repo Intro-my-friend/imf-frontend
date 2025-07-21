@@ -27,7 +27,7 @@ export async function fetchUserVerification(
   });
 }
 
-export async function fetchUserRegist(
+export async function fetchUserRegister(
   introduction: boolean,
   verificationNumber: string,
   phoneNumber: string,
@@ -35,7 +35,7 @@ export async function fetchUserRegist(
 ) {
   console.log({ introduction, verificationNumber, phoneNumber, token });
   const response = await fetch(
-    "http://15.164.39.230:8000/api/v0/users/regist",
+    "http://15.164.39.230:8000/api/v0/users/register",
     {
       method: "POST",
       headers: {

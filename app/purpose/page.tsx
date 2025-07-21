@@ -6,7 +6,10 @@ import Link from "next/link";
 
 import Header from "@/component/Header";
 import { withJwt } from "@/lib/authToken";
-import { fetchUserRegist, fetchUserVerificationCodes } from "@/services/users";
+import {
+  fetchUserRegister,
+  fetchUserVerificationCodes,
+} from "@/services/users";
 import { useMutation } from "@tanstack/react-query";
 import classNames from "classnames";
 
@@ -15,7 +18,7 @@ import $ from "./style.module.scss";
 export default function Purpose() {
   const [purpose, setPurpose] = useState("only");
 
-  const useUserRegistMutation = useMutation({
+  const useUserRegisterMutation = useMutation({
     mutationFn: withJwt(
       (
         token,
@@ -25,7 +28,7 @@ export default function Purpose() {
           phoneNumber: string;
         },
       ) =>
-        fetchUserRegist(
+        fetchUserRegister(
           params.introduction,
           params.verificationNumber,
           params.phoneNumber,
@@ -42,7 +45,7 @@ export default function Purpose() {
     const verificationNumber = localStorage.getItem("verificationNumber") || "";
     const phoneNumber = localStorage.getItem("phoneNumber") || "";
 
-    useUserRegistMutation.mutate({
+    useUserRegisterMutation.mutate({
       introduction: purpose === "with",
       verificationNumber,
       phoneNumber,
