@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query": "^5.83.0",
     "classnames": "^2.5.1",
     "eslint-plugin-prettier": "^5.5.3",
