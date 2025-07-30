@@ -1,3 +1,31 @@
-.footer{
+.footer {
+  display: flex;
+  border-top: 1px solid #e0e0e0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 100;
 
+  .match,
+  .friend,
+  .my {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-basis: 33%;
+    padding: 10px 0;
+    color: #989ba2;
+    font-size: 12px;
+    font-weight: 500;
+
+    &.active {
+      color: #ff7968;
+      svg {
+        color: #ff7968;
+      }
+    }
+  }
 }
