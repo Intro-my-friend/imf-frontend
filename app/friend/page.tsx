@@ -41,7 +41,6 @@ export default function Friend() {
     staleTime: 1000 * 60,
   });
 
-  console.log(useUserInfoQuery);
 
   useEffect(() => {
     if (useUserInfoQuery.isSuccess) {
