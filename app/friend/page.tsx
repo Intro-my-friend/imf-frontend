@@ -104,7 +104,7 @@ export default function Friend() {
           <div className={$.inputRow}>
             <input
               type="tel"
-              placeholder="초대할 번호를 입력하세요"
+              placeholder="휴대폰 번호(ex, 01000000000)"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className={$.phoneInput}
