@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 import Header from "@/component/Header";
 import Footer from "@/component/Footer";
@@ -41,6 +41,23 @@ export default function Friend() {
     staleTime: 1000 * 60,
   });
 
+  const inviteMutation = useMutation({
+    mutationFn: withJwt(
+      (token, params: { phone: string }) =>
+        sendInvite(params.phone, token)
+    ),
+    onSuccess: () => {
+      alert("초대가 완료되었습니다");
+      setModal("none");
+      setPhone("");
+      refetchInvitations(); // useQuery로 받은 refetch 함수
+    },
+    onError: (error: any) => {
+      alert("초대에 실패했습니다. 다시 시도해주세요.");
+      console.error("초대 실패:", error);
+    },
+  });
+
 
   useEffect(() => {
     if (useUserInfoQuery.isSuccess) {
@@ -74,17 +91,8 @@ export default function Friend() {
     }
   };
 
-  const handleInvite = async () => {
-    const send = withJwt(
-      (token, params: { phone: string }) =>
-        sendInvite(params.phone, token)
-    );
-    
-    await send({ phone: phone });
-    alert("초대가 완료되었습니다");
-    setModal("none");
-    setPhone("");
-    await refetchInvitations();
+  const handleInvite = () => {
+    inviteMutation.mutate({ phone });
   };
 
   return (
