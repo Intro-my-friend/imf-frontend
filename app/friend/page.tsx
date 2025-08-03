@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Header from "@/component/Header";
 import Footer from "@/component/Footer";
@@ -25,6 +25,8 @@ export default function Friend() {
   const router = useRouter();
   const [phone, setPhone] = useState("");
   const [modal, setModal] = useState<"none" | "exists" | "confirm">("none");
+
+  const queryClient = useQueryClient();
 
   const {
     data: invitationList,
@@ -50,7 +52,7 @@ export default function Friend() {
       alert("초대가 완료되었습니다");
       setModal("none");
       setPhone("");
-      refetchInvitations(); // useQuery로 받은 refetch 함수
+      queryClient.invalidateQueries({ queryKey: ["myInvitations"] });
     },
     onError: (error: any) => {
       alert("초대에 실패했습니다. 다시 시도해주세요.");
