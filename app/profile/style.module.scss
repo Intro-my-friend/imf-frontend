@@ -8,4 +8,74 @@
       width: 25%;
     }
   }
+
+  .input-wrapper {
+    padding: 32px 20px;
+  }
+
+  .sub-title {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2e2f33;
+
+    .required {
+      color: #ff7968;
+    }
+  }
+
+  .name,
+  .height,
+  .job {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .user-input {
+    margin-bottom: 32px;
+  }
+
+  .gender {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 3px;
+    background: #70737c14;
+
+    .male,
+    .female {
+      padding: 9.5px 9px;
+      flex: 1;
+      text-align: center;
+
+      &.active {
+        background: white;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .inputWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    .user-input {
+      width: 100%;
+      padding-right: 40px;
+      box-sizing: border-box;
+    }
+
+    .suffix {
+      position: absolute;
+      top: 20px;
+      right: 12px;
+      transform: translateY(-50%);
+      color: #808080;
+      pointer-events: none;
+      font-size: 16px;
+      user-select: none;
+    }
+  }
 }

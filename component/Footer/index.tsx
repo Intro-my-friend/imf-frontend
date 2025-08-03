@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import Icon from "@/component/Icon";
 import classNames from "classnames";
@@ -9,12 +9,14 @@ import classNames from "classnames";
 import $ from "./style.module.scss";
 
 function Footer() {
+  const pathname = usePathname();
+
   return (
     <div className={$.footer}>
       <Link
         href={"/match"}
         className={classNames($.match, {
-          [$["active"]]: window.location.href.includes("/match"),
+          [$["active"]]: pathname.includes("/match"),
         })}
       >
         <Icon size={24} name={"heart"} /> 매칭
@@ -22,7 +24,7 @@ function Footer() {
       <Link
         href={"/friend"}
         className={classNames($.friend, {
-          [$["active"]]: window.location.href.includes("/friend"),
+          [$["active"]]: pathname.includes("/friend"),
         })}
       >
         <Icon size={24} name={"person"} /> 지인
@@ -30,7 +32,7 @@ function Footer() {
       <Link
         href={"/my"}
         className={classNames($.my, {
-          [$["active"]]: window.location.href.includes("/my"),
+          [$["active"]]: pathname.includes("/my"),
         })}
       >
         <Icon size={24} name={"my"} /> 마이
