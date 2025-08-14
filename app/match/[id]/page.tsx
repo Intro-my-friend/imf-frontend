@@ -246,90 +246,116 @@ export default function MatchDetailPage() {
       {modal !== "NONE" && <div className={$.modalOverlay} onClick={() => setModal("NONE")} />}
 
       {modal === "LIKE" && (
-        <div className={$.modalCard} role="dialog" aria-modal="true">
-          <div className={$.modalTitle}>호감 보내기</div>
-          <div className={$.modalDesc}>{payload?.name}님에게 호감을 보냅니다.</div>
-          <div className={$.modalDesc}>(4 coffee)</div>
-          <div className={$.modalRow}>
-            <button
-              type="button"
-              className={$.modalCancel}
-              onClick={() => setModal("NONE")}
-            >
-              취소
-            </button>
-            <button
-              className={`${$.modalAction} ${$.modalActionPrimary}`}
-              onClick={() => actMutation.mutate({ action: "LIKE" })}
-              disabled={actMutation.isPending}
-            >
-              확인
-            </button>
+        <div className={$.modal} role="dialog" aria-modal="true">
+          <div className={$.modalBox}>
+            <div className={$.modalTitle}>호감 보내기</div>
+            <div className={$.modalText}>
+              {payload?.name}님에게 호감을 보냅니다.
+              <br />
+              (4 coffee)
+            </div>
+
+            <div className={$.modalActions}>
+              <button
+                type="button"
+                className={$.modalCancel}
+                onClick={() => setModal("NONE")}
+              >
+                취소
+              </button>
+              <button
+                className={$.modalConfirm}
+                onClick={() => actMutation.mutate({ action: "LIKE" })}
+                disabled={actMutation.isPending}
+              >
+                {actMutation.isPending ? "처리 중..." : "확인"}
+              </button>
+            </div>
           </div>
         </div>
       )}
 
       {modal === "REJECT" && (
-        <div className={$.modalCard} role="dialog" aria-modal="true">
-          <div className={$.modalTitle}>호감 거절</div>
-          <div className={$.modalDesc}>
-            {payload?.name}님의 호감을 거절합니다
-            <br />
-            이 작업은 되돌릴 수 없습니다
-          </div>
-          <div className={$.modalRow}>
-          <button
-              type="button"
-              className={$.modalCancel}
-              onClick={() => setModal("NONE")}
-            >
-              취소
-            </button>
-            <button
-              className={`${$.modalAction} ${$.modalActionPrimary}`}
-              onClick={() => actMutation.mutate({ action: "REJECT" })}
-              disabled={actMutation.isPending}
-            >
-              확인
-            </button>
+        <div className={$.modal} role="dialog" aria-modal="true">
+          <div className={$.modalBox}>
+            <div className={$.modalTitle}>호감 거절</div>
+            <div className={$.modalText}>
+              {payload?.name}님의 호감을 거절합니다
+              <br />
+              이 작업은 되돌릴 수 없습니다
+            </div>
+
+            <div className={$.modalActions}>
+              <button
+                type="button"
+                className={$.modalCancel}
+                onClick={() => setModal("NONE")}
+                disabled={actMutation.isPending}
+              >
+                취소
+              </button>
+              <button
+                className={$.modalConfirm}
+                onClick={() => actMutation.mutate({ action: "REJECT" })}
+                disabled={actMutation.isPending}
+              >
+                {actMutation.isPending ? "처리 중..." : "확인"}
+              </button>
+            </div>
           </div>
         </div>
       )}
 
       {modal === "CONTACT" && (
-        <div className={$.modalCard} role="dialog" aria-modal="true">
-          <div className={$.modalTitle}>연락처 보기</div>
-          <div className={$.contactRow}>
-            <div className={$.contactBox}>
-              <Icon name="person" size={16} />
-              <span>{payload?.contact ?? "-"}</span>
+        <div className={$.modal} role="dialog" aria-modal="true">
+          <div className={$.modalBox}>
+            <div className={$.modalTitle}>연락처 보기</div>
+
+            <div className={$.contactRow}>
+              <div className={$.contactBox}>
+                <Icon name="phone" size={18} />
+                <span>{payload?.contact ?? "-"}</span>
+              </div>
             </div>
-            <button
-              className={`${$.modalAction} ${$.modalActionPrimary}`}
-              onClick={() => {
-                if (payload?.contact) {
-                  navigator.clipboard?.writeText(payload.contact).catch(() => {});
-                }
-                setModal("NONE");
-              }}
-            >
-              복사
-            </button>
+
+            <div className={$.modalActions}>
+              <button
+                type="button"
+                className={$.modalCancel}
+                onClick={() => setModal("NONE")}
+              >
+                닫기
+              </button>
+              <button
+                className={$.modalConfirm}
+                onClick={() => {
+                  if (payload?.contact) {
+                    navigator.clipboard?.writeText(payload.contact).catch(() => {});
+                  }
+                  setModal("NONE");
+                }}
+              >
+                복사
+              </button>
+            </div>
           </div>
         </div>
       )}
 
       {modal === "ERROR" && (
-        <div className={$.modalCard} role="dialog" aria-modal="true">
-          <div className={$.modalTitle}>알림</div>
-          <div className={$.modalDesc}>{errorMsg}</div>
-          <div className={$.modalRowCenter}>
-            <button
-              className={`${$.modalAction} ${$.modalActionPrimary}`}
-              onClick={() => setModal("NONE")}
-            >
-              확인
-            </button>
+        <div className={$.modal} role="dialog" aria-modal="true">
+          <div className={$.modalBox}>
+            <div className={$.modalTitle}>알림</div>
+            <div className={$.modalText}>{errorMsg}</div>
+
+            <div className={$.modalActions}>
+              <button
+                className={$.modalConfirm}
+                onClick={() => setModal("NONE")}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </div>
       )}

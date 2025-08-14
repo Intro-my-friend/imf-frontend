@@ -5,12 +5,14 @@ import heart from "../assets/heart.svg";
 import my from "../assets/my.svg";
 import person from "../assets/person.svg";
 import left_arrow from "../assets/left-arrow.svg";
+import phone from "../assets/phone.svg"
 
 export const iconTypes = {
   heart,
   person,
   my,
-  left_arrow
+  left_arrow,
+  phone,
 };
 
 export type IconProps = {
