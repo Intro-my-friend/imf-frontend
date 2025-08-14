@@ -1,0 +1,329 @@
+/* ===== Page ===== */
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+  background: #fff;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ===== (옵션) 로컬 헤더 – 배경/보더 제거 ===== */
+.localHeader {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 12px;
+  background: transparent;
+  border: none;
+}
+.backBtn {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; margin: 0;
+  background: transparent; border: none; color: #111827; box-shadow: none;
+}
+.backBtn:hover, .backBtn:active, .backBtn:focus {
+  background: transparent; border: none; outline: none; box-shadow: none;
+}
+.localTitle { font-weight: 700; font-size: 16px; color: #111827; }
+
+/* ===== Top image + floating back ===== */
+.topImage {
+  position: relative; border-radius: 16px; overflow: hidden; background: #f3f4f6;
+  img { width: 100%; height: auto; display: block; object-fit: cover; }
+}
+.floatingBack {
+  position: absolute; top: 8px; left: 8px; z-index: 5;
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: none; color: #111827;
+}
+
+/* ===== Basic info ===== */
+.name { margin-top: 12px; font-size: 18px; font-weight: 800; color: #111827; }
+.baseList { margin-top: 6px; gap: 12px;}
+.row { display: flex; gap: 8px; align-items: baseline; padding: 4px 0; margin-top: 6px;}
+.label { width: 64px; flex: 0 0 auto; color: #6b7280; font-size: 13px; }
+.value { color: #111827; font-weight: 600; font-size: 14px; }
+
+/* ===== Gallery & random fields ===== */
+.stream { display: grid; gap: 6px; }
+.galleryImage {
+  border-radius: 16px; overflow: hidden; background: #f3f4f6;
+  img { width: 100%; height: auto; display: block; object-fit: cover; }
+}
+
+/* ===== Bottom buttons (page 끝에 배치) ===== */
+.buttonSection {
+  margin-top: 16px;
+  padding-bottom: 24px;     /* 마지막 여백 */
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+.btn {
+  height: 48px; width: 100%;
+  border: 0; border-radius: 12px;
+  font-size: 15px; font-weight: 700;
+  transition: transform .05s ease-in-out;
+}
+.buttonSection .btn {
+  width: min(360px, calc(100% - 48px)); /* 좌우 24px 여백 느낌 */
+}
+.btn:active { transform: translateY(1px); }
+.btnPrimary { background: #ff7a70; color: #fff; } /* 코랄 */
+.btnGray    { background: #a8a8a8; color: #fff; } /* 회색 */
+.btnDark    { background: #0f172a; color: #fff; } /* 딥 네이비 */
+
+/* ===== Error / Skeleton ===== */
+.errorBox { max-width: 420px; margin: 48px auto; text-align: center; padding: 0 16px; }
+.errorTitle { font-size: 18px; font-weight: 700; color: #111827; }
+.errorSub { margin-top: 4px; font-size: 13px; color: #6b7280; }
+.retryBtn { margin-top: 16px; border: 1px solid #e5e7eb; padding: 8px 14px; border-radius: 10px; font-weight: 600; background: #fff; }
+
+.skeleton { position: relative; overflow: hidden; background: #f3f4f6; border-radius: 14px; }
+.skeleton::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.8) 50%, rgba(255,255,255,0) 100%);
+  transform: translateX(-100%); animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* ====== Modal (Center Card) ====== */
+
+/* 오버레이 */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* 중앙 작은 카드 */
+@keyframes modal-pop {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.98); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.modalCard {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 90;
+  transform: translate(-50%, -50%);
+  width: min(300px, calc(100% - 56px));  /* 시안에 맞춘 좁은 폭 */
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 40px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.08);
+  padding: 16px 16px 12px;               /* 상/좌우/하 */
+  animation: modal-pop .18s ease-out;
+}
+
+/* 타이틀/설명 */
+.modalTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+.modalDesc {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 14px;
+  color: #9CA3AF;                        /* 연한 회색 */
+  line-height: 1.4;
+}
+
+.modalRow {
+  margin-top: 12px;
+  display: grid;
+  /* [좌 여백][취소][간격][확인][우 여백] */
+  grid-template-columns: 10px auto 2px auto 10px;
+  align-items: center;
+  column-gap: 0;  /* 혹시 남아있으면 0으로 */
+}
+
+/* 취소는 그대로 2열 */
+.modalCancel {
+  grid-column: 2;
+  justify-self: start;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #ff7a70;
+  font-weight: 700;
+  font-size: 14px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 6px;
+  cursor: pointer;
+}
+
+/* 확인 버튼: 콘텐츠 폭만 사용 */
+.modalAction {
+  grid-column: 4;
+  justify-self: end;   /* 오른쪽 정렬 */
+  width: auto;         /* ← stretch 제거 */
+  min-width: 104px;    /* ← 더 작게: 96~104px 권장 */
+  height: 38px;        /* 필요시 36px 로 더 컴팩트 */
+  padding: 0 14px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1;
+}
+.modalActionPrimary { background: #ff7a70; color: #fff; }
+.modalAction[disabled] { opacity: .7; cursor: not-allowed; }
+
+/* 연락처 모달 레이아웃 */
+.contactRow {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+.contactBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: #fff4f2;       /* 연한 코랄 */
+  color: #111827;
+  font-weight: 700;
+}
+
+/* (옵션) 하트 옆 카운트 Chip */
+.countChip {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 3px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* === Modal action row: 좌/우 자동, 가운데만 고정 간격 === */
+.modalCard .modalRow {
+  margin-top: 12px;
+  display: grid;
+  /* [좌 flex][취소][센터간격][확인][우 flex] */
+  grid-template-columns: 1fr auto 20px auto 1fr;
+  align-items: center;
+
+  /* 기존 선언 덮어쓰기 */
+  gap: 0 !important;
+  column-gap: 12 !important;
+  row-gap: 0 !important;
+  padding: 0 !important;  /* 이전 flex 버전에서 넣었던 좌우 padding 제거 */
+}
+
+/* 취소 버튼: 2열 고정 */
+.modalCard .modalCancel {
+  grid-column: 2;
+  justify-self: start;
+  margin: 0 !important;   /* 혹시 남은 margin 제거 */
+  padding: 8px 6px;       /* 탭 영역 유지 */
+}
+
+/* 확인 버튼: 4열 고정, 콘텐츠 폭만 사용(작게 보이게) */
+.modalCard .modalAction {
+  grid-column: 4;
+  justify-self: end;
+  width: auto;
+  min-width: 108px;        /* 더 작게 보이게 ↘ (원하면 88~104px 사이로 조절) */
+  height: 36px;           /* 컴팩트 높이 */
+  padding: 0 10px;
+  margin: 0 !important;   /* 남아있는 auto margin 제거 */
+  border-radius: 12px;
+  font-weight: 800; font-size: 14px; line-height: 1;
+}
+.modalCard .modalActionPrimary { background: #ff7a70; color: #fff; }
+
+/* 간격 미세조정: 2px/4px/6px 등으로 바로 변경 가능 */
+.modalCard .modalRow.tight { --sep: 2px; }
+.modalCard .modalRow.loose { --sep: 6px; }
+
+/* 에러 모달: 확인 1개 버튼 중앙 정렬 */
+.modalRowCenter {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* 가운데 버튼 */
+  align-items: center;
+}
+.modalCard .modalRowCenter .modalAction {
+  grid-column: 2 !important;            /* 가운데 열 */
+  justify-self: center !important;       /* 중앙 정렬 */
+  margin: 0 !important;                  /* 남아있는 auto margin 제거 */
+  width: auto !important;
+  min-width: 120px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ===== 연락처 모달 오버라이드 ===== */
+.modalCard .contactRow {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto;  /* [번호박스][복사버튼] */
+  gap: 10px;
+  align-items: center;
+  padding: 0;                       /* 간섭 제거 */
+}
+
+/* 번호 박스 스타일 */
+.modalCard .contactRow .contactBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;                     /* 버튼과 거의 같은 높이 */
+  padding: 0 12px;
+  border-radius: 12px;
+  background: #fff4f2;
+  color: #111827;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums; /* 숫자 간격 일정 */
+}
+
+/* 복사 버튼: 연락처 모달에 한정하여 재설정 */
+.modalCard .contactRow .modalAction {
+  grid-column: auto !important;     /* 전역 grid-column 강제값 무력화 */
+  justify-self: end !important;     /* 우측 정렬만 유지 */
+  width: auto !important;
+  min-width: 96px;                   /* 96~112px 사이 취향대로 */
+  height: 36px;
+  padding: 0 12px;
+  margin: 0 !important;             /* 남아있는 마진 제거 */
+  border-radius: 12px;
+}
+
+/* (선택) 버튼 너무 커 보이면 더 슬림하게 */
+@media (max-width: 380px) {
+  .modalCard .contactRow .modalAction {
+    min-width: 90px;
+    height: 34px;
+  }
+}
