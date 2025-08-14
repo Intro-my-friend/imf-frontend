@@ -4,11 +4,13 @@ import { Keyof } from "@/type/util";
 import heart from "../assets/heart.svg";
 import my from "../assets/my.svg";
 import person from "../assets/person.svg";
+import left_arrow from "../assets/left-arrow.svg";
 
 export const iconTypes = {
   heart,
   person,
   my,
+  left_arrow
 };
 
 export type IconProps = {
