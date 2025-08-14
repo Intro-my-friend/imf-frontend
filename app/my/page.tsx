@@ -24,6 +24,7 @@ export default function My() {
   const [selectedTab, setSelectedTab] = useState<Mode>("introduce");
   const [modeModal, setModelModal] = useState<Mode | "none">("none");
   const [isProfileModal, setIsProfileModal] = useState(false);
+  const [isProfileRequiredOpen, setIsProfileRequiredOpen] = useState(false);
 
   const useUserInfoQuery = useQuery({
     queryKey: ["userInfo"],
@@ -41,11 +42,6 @@ export default function My() {
     staleTime: 60_000,
   });
 
-  const handleTabClick = (mode: Mode) => {
-    if (selectedTab === mode || mutatePurpose.isPending) return;
-    setModelModal(mode);
-  };
-
   useEffect(() => {
     if (useUserInfoQuery.isSuccess) {
       const data = useUserInfoQuery.data.data
@@ -57,6 +53,20 @@ export default function My() {
       setSelectedTab(data.displayList ? "introduce" : "recommend");
     }
   }, [useUserInfoQuery.data, useUserInfoQuery.isSuccess, router]);
+
+  const hasProfile = Boolean(useUserInfoQuery.data?.data?.isProfile);
+
+  const handleTabClick = (mode: Mode) => {
+    if (selectedTab === mode || mutatePurpose.isPending) return;
+  
+    // 소개도 받기로 전환하려는데 프로필이 없으면 작성 유도 모달
+    if (mode === "introduce" && !hasProfile) {
+      setIsProfileRequiredOpen(true);
+      setModelModal("none"); // 다른 모달이 열려있지 않도록
+      return;
+    }
+    setModelModal(mode);
+  };
 
   const mutatePurpose = useMutation({
     mutationFn: withJwt((token, params: { mode: Mode }) => patchPurpose(params.mode === "introduce", token)),
@@ -103,7 +113,13 @@ export default function My() {
         <div className={$.profileWrapper}>
           <div
             className={$.profileImageBox}
-            onClick={() => setIsProfileModal(true)}
+            onClick={() => {
+              if (hasProfile) {
+                setIsProfileModal(true);
+              } else {
+                // router.push(""); 프로필 등록 uri로 바로 이동
+              }
+            }}
           >
             <Image
               src={profileUrl ?? defaultProfileImage}
@@ -179,6 +195,34 @@ export default function My() {
             <button className={$.modalButton}>사진 변경</button>
             <button className={$.modalButton}>프로필 변경</button>
             <button className={$.modalButton}>연락처 변경</button>
+          </div>
+        </div>
+      )}
+      {isProfileRequiredOpen && (
+        <div className={$.modal}>
+          <div className={$.modalBox}>
+            <div className={$.modalTitle}>소개도 받기</div>
+            <div className={$.modalText}>
+              매칭을 위해서는 소개글을 작성해야 합니다.
+            </div>
+            <div className={$.modalActions}>
+              <button
+                className={$.modalCancel}
+                onClick={() => setIsProfileRequiredOpen(false)}
+                disabled={mutatePurpose.isPending}
+              >
+                다음에
+              </button>
+              <button
+                className={$.modalConfirm}
+                onClick={() => {
+                  setIsProfileRequiredOpen(false);
+                  // router.push("/profile/edit");
+                }}
+              >
+                프로필 작성
+              </button>
+            </div>
           </div>
         </div>
       )}
