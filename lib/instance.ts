@@ -9,7 +9,6 @@ const API_BASE_URL = "http://15.164.39.230:8000";
 const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   if (typeof window !== "undefined") {
     const accessToken = window.localStorage.getItem("jwt");
-    console.log({ accessToken });
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
