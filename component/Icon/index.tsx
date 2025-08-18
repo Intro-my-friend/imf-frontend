@@ -6,6 +6,9 @@ import my from "../assets/my.svg";
 import person from "../assets/person.svg";
 import left_arrow from "../assets/left-arrow.svg";
 import phone from "../assets/phone.svg"
+import logout from "../assets/logout.svg";
+import pencil from "../assets/pencil.svg";
+import request from "../assets/request.svg";
 
 export const iconTypes = {
   heart,
@@ -13,6 +16,9 @@ export const iconTypes = {
   my,
   left_arrow,
   phone,
+  logout,
+  pencil,
+  request,
 };
 
 export type IconProps = {
