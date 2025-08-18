@@ -1,0 +1,215 @@
+/* ===== Page ===== */
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+  background: #fff;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ===== (옵션) 로컬 헤더 – 배경/보더 제거 ===== */
+.localHeader {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 12px;
+  background: transparent;
+  border: none;
+}
+.backBtn {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; margin: 0;
+  background: transparent; border: none; color: #111827; box-shadow: none;
+}
+.backBtn:hover, .backBtn:active, .backBtn:focus {
+  background: transparent; border: none; outline: none; box-shadow: none;
+}
+.localTitle { font-weight: 700; font-size: 16px; color: #111827; }
+
+/* ===== Top image + floating back ===== */
+.topImage {
+  position: relative; border-radius: 16px; overflow: hidden; background: #f3f4f6;
+  img { width: 100%; height: auto; display: block; object-fit: cover; }
+}
+.floatingBack {
+  position: absolute; top: 8px; left: 8px; z-index: 5;
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: none; color: #111827;
+}
+
+/* ===== Basic info ===== */
+.name { margin-top: 12px; font-size: 18px; font-weight: 800; color: #111827; }
+.baseList { margin-top: 6px; gap: 12px;}
+.row { display: flex; gap: 8px; align-items: baseline; padding: 4px 0; margin-top: 6px;}
+.label { width: 64px; flex: 0 0 auto; color: #6b7280; font-size: 13px; }
+.value { color: #111827; font-weight: 600; font-size: 14px; }
+
+/* ===== Gallery & random fields ===== */
+.stream { display: grid; gap: 6px; }
+.galleryImage {
+  border-radius: 16px; overflow: hidden; background: #f3f4f6;
+  img { width: 100%; height: auto; display: block; object-fit: cover; }
+}
+
+/* ===== Bottom buttons (page 끝에 배치) ===== */
+.buttonSection {
+  margin-top: 16px;
+  padding-bottom: 24px;     /* 마지막 여백 */
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+.btn {
+  height: 48px; width: 100%;
+  border: 0; border-radius: 12px;
+  font-size: 15px; font-weight: 700;
+  transition: transform .05s ease-in-out;
+}
+.buttonSection .btn {
+  width: min(360px, calc(100% - 48px)); /* 좌우 24px 여백 느낌 */
+}
+.btn:active { transform: translateY(1px); }
+.btnPrimary { background: #ff7a70; color: #fff; } /* 코랄 */
+.btnGray    { background: #a8a8a8; color: #fff; } /* 회색 */
+.btnDark    { background: #0f172a; color: #fff; } /* 딥 네이비 */
+
+/* ===== Error / Skeleton ===== */
+.errorBox { max-width: 420px; margin: 48px auto; text-align: center; padding: 0 16px; }
+.errorTitle { font-size: 18px; font-weight: 700; color: #111827; }
+.errorSub { margin-top: 4px; font-size: 13px; color: #6b7280; }
+.retryBtn { margin-top: 16px; border: 1px solid #e5e7eb; padding: 8px 14px; border-radius: 10px; font-weight: 600; background: #fff; }
+
+.skeleton { position: relative; overflow: hidden; background: #f3f4f6; border-radius: 14px; }
+.skeleton::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.8) 50%, rgba(255,255,255,0) 100%);
+  transform: translateX(-100%); animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* ====== Modal (Center Card) ====== */
+
+.modal {
+  position: fixed;     /* 화면 고정 */
+  inset: 0;            /* top/right/bottom/left: 0 */
+  z-index: 1000;       /* 어떤 것보다 위로 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45); /* 반투명 배경 */
+}
+
+.modalBox {
+  width: 88%;
+  max-width: 360px;
+  border-radius: 16px;
+  background: #fff;
+  padding: 20px 20px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.modalTitle {
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.modalText {
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+}
+
+.modalCancel,
+.modalConfirm {
+  flex: 1;
+  height: 44px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+}
+
+.modalCancel {
+  background: #fff2ee;
+  color: #ff7a66;
+}
+
+.modalConfirm {
+  background: #ff7a66;
+  color: #fff;
+}
+
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modalContent {
+  width: 92vw;
+  max-width: 520px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalButton {
+  height: 56px;
+  font-size: 18px;
+  font-weight: 700;
+  background: #ff6b5c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+}
+
+/* 연락처 모달 레이아웃 */
+.contactRow {
+  margin: 14px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+.contactBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: #fff4f2;       /* 연한 코랄 */
+  color: #111827;
+  font-weight: 700;
+}
