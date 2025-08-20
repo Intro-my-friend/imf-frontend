@@ -7,7 +7,7 @@ import { withJwt } from "@/lib/authToken";
 
 import Footer from "@/component/Footer";
 import Header from "@/component/Header";
-import Icon from "@/component/Icon";
+import Link from "next/link";
 
 import { fetchUserInfo } from "@/services/my";
 import { fetchMatchList } from "@/services/match";         // /match?type=MATCH|RECEIVED|SENT
@@ -153,7 +153,13 @@ export default function MatchHomePage() {
               items.map((m) => {
                 const age = toAge(m.user.birth);
                 return (
-                  <article key={m.matchId} className={$.card}>
+                  <Link
+                    key={m.matchId}
+                    href={`/match/${m.matchId}`}
+                    className={$.card}
+                    aria-label={`상세 보기: ${age ? `${age}세` : "나이 미상"} · ${m.user.job ?? "직업 미상"}`}
+                    prefetch={false} // 카드가 많다면 과도한 프리패치 방지 (원하면 제거)
+                  >
                     {m.user.profileImage ? (
                       <img className={$.cardImg} src={m.user.profileImage} alt="" />
                     ) : (
@@ -164,11 +170,11 @@ export default function MatchHomePage() {
                       <span className={$.dot}>·</span>
                       <span className={$.job}>{m.user.job ?? "-"}</span>
                     </div>
-                  </article>
+                  </Link>
                 );
               })
             )}
-          </div>
+</div>
         </section>
       </main>
 
