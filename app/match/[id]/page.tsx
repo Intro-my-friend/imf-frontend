@@ -71,9 +71,12 @@ export default function MatchDetailPage() {
     mutationFn: withJwt((token, params: { action: "LIKE" | "REJECT" }) =>
       respondMatch(id, params.action === "LIKE", token) // LIKE=true, REJECT=false
     ),
-    onSuccess: () => {
+    onSuccess: async () => {
       setModal("NONE");
-      qc.invalidateQueries({ queryKey: ["matchDetail", id] });
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["matchDetail", id] }),
+        qc.invalidateQueries({ queryKey: ["matchList"], refetchType: "active" }),
+      ])
     },
     onError: (error: any) => {
       const msg = error?.message || "요청에 실패했습니다.";
