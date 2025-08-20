@@ -33,7 +33,7 @@ const toAge = (birth?: string) => {
   return age;
 };
 
-export function ddayFromCreatedAt(createdAt: string): number | null {
+function ddayFromCreatedAt(createdAt: string): number | null {
   const createdMs  = new Date(createdAt).getTime();
   if (Number.isNaN(createdMs)) return null;
   const deadlineMs = createdMs + 48 * 3600 * 1000;           // 정확히 48시간
