@@ -1,3 +1,241 @@
-.match{
+.page {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #fff;
+}
 
+.main {
+  padding: 20px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timerWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ffd7c2;
+  background: #fff7f0;
+  color: #f06a2b;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 700;
+  width: max-content;
+  margin-inline: auto;
+}
+
+.timerIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  position: relative;
+}
+.timerIcon::before,
+.timerIcon::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  left: 50%;
+  top: 50%;
+  transform-origin: left top;
+}
+.timerIcon::before { width: 6px; height: 2px; transform: translate(-50%,-50%) rotate(0deg); }
+.timerIcon::after  { width: 2px; height: 6px; transform: translate(-50%,-50%) rotate(90deg); }
+
+.timerText { font-variant-numeric: tabular-nums; }
+
+.ctaButton {
+  width: 100%;
+  height: 56px;
+  border: 0;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, #ff8a5b 0%, #ff6b6b 100%);
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: #f0f0f0;
+  margin: 20px 0;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #f6f6f6;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.tab {
+  height: 40px;
+  border-radius: 10px;
+  border: 0;
+  background: transparent;
+  font-weight: 600;
+}
+.tabActive {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding-bottom: 12px;
+}
+
+.card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fafafa;
+}
+.cardImg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.noImg {
+  background: #eee;
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0,0,0,0.55);
+  border-radius: 999px;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px 10px;
+  font-size: 13px;
+}
+.age { font-weight: 700; }
+.dot { opacity: .5; }
+.job { color: #666; }
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 28px 8px;
+  color: #8c8c8c;
+}
+
+/* Modal */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+.modalCard {
+  width: min(360px, calc(100% - 32px));
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 16px 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.modalDesc {
+  text-align: center;
+  color: #6b6b6b;
+  margin-bottom: 16px;
+}
+
+.modalRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.modalAction {
+  height: 44px;
+  border-radius: 10px;
+  border: 0;
+  background: #f2f2f2;
+  font-weight: 700;
+}
+
+.modalPrimary {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+
+/* 중앙 정렬 레이아웃 */
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-top: 28px;
+  text-align: center;
+}
+
+.pill {
+  border: 1px solid #ff9a7a;
+  color: #ff6b6b;
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.muted {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+/* 안내 박스 */
+.noticeBox {
+  background: #fff4f1;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 10px;
+  width: min(360px, 92%);
+  text-align: left;
+}
+.noticeTitle {
+  color: #ff6b6b;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.noticeDesc {
+  color: #d46a54;
+  line-height: 1.5;
 }
