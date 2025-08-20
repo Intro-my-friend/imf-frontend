@@ -33,6 +33,15 @@ const toAge = (birth?: string) => {
   return age;
 };
 
+export function ddayFromCreatedAt(createdAt: string): number | null {
+  const createdMs  = new Date(createdAt).getTime();
+  if (Number.isNaN(createdMs)) return null;
+  const deadlineMs = createdMs + 48 * 3600 * 1000;           // 정확히 48시간
+  const leftMs     = deadlineMs - Date.now();
+  if (leftMs <= 0) return null;
+  return Math.ceil(leftMs / (24 * 3600 * 1000));             // 0<left<=24h → 1, 24h<left<=48h → 2
+}
+
 function useCountdownToNext8AM() {
   const pad = (n: number) => String(n).padStart(2, "0");
   const [text, setText] = useState(() => calc());
@@ -78,7 +87,7 @@ export default function MatchHomePage() {
     queryFn: withJwt((token) => fetchMatchList(token, tab)),
     enabled: !isIntroducerMode,
     placeholderData: keepPreviousData,   // ✅ v5 방식
-    staleTime: 30_000,
+    staleTime: 0,
   });
   const items: MatchListItem[] = (listRes as any)?.data ?? [];
 
@@ -152,19 +161,26 @@ export default function MatchHomePage() {
             ) : (
               items.map((m) => {
                 const age = toAge(m.user.birth);
+                const dday = ddayFromCreatedAt(m.createdAt); // ⬅️ 추가
+
+                const isMatch = tab === "MATCH";
+                const showBadge = !isMatch && dday !== null;
+
                 return (
                   <Link
                     key={m.matchId}
                     href={`/match/${m.matchId}`}
                     className={$.card}
-                    aria-label={`상세 보기: ${age ? `${age}세` : "나이 미상"} · ${m.user.job ?? "직업 미상"}`}
-                    prefetch={false} // 카드가 많다면 과도한 프리패치 방지 (원하면 제거)
+                    prefetch={false}
                   >
                     {m.user.profileImage ? (
                       <img className={$.cardImg} src={m.user.profileImage} alt="" />
                     ) : (
                       <div className={`${$.cardImg} ${$.noImg}`} />
                     )}
+
+                    {showBadge && <div className={$.badge}>D-{dday}</div>}
+
                     <div className={$.cardMeta}>
                       <span className={$.age}>{age ? `${age}세` : "-"}</span>
                       <span className={$.dot}>·</span>
@@ -174,7 +190,7 @@ export default function MatchHomePage() {
                 );
               })
             )}
-</div>
+          </div>
         </section>
       </main>
 
