@@ -8,11 +8,12 @@ import { useRouter } from "next/navigation";
 import Header from "@/component/Header";
 import { withJwt } from "@/lib/authToken";
 import {
+  fetchUserRegister,
   fetchUserVerification,
   fetchUserVerificationCodes,
 } from "@/services/users";
 import type { CodesRes, VerifyRes } from "@/services/users";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import classNames from "classnames";
 
 import $ from "./page.module.scss";
@@ -105,11 +106,28 @@ export default function Invitation() {
     },
   });
 
+  const useUserRegisterMutation = useMutation({
+    mutationFn: withJwt(
+      (
+        token,
+        params: {
+          verificationNumber: string;
+          phoneNumber: string;
+        },
+      ) => 
+        fetchUserRegister(
+          false, 
+          verificationNumber,
+          phoneNumber, 
+          token
+        )
+    ),
+  });
+
   const handleNextStep = () => {
     if (!verified) return;
-    localStorage.setItem("verificationNumber", verificationNumber);
-    localStorage.setItem("phoneNumber", phoneNumber);
-    router.push("/purpose");
+    useUserRegisterMutation.mutate({ verificationNumber, phoneNumber})
+    router.push("/match");
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,8 +152,6 @@ export default function Invitation() {
     verified || !phoneNumber || useVerificationCodesMutation.isPending;
   const disableVerifyBtn =
     verified || !phoneNumber || !verificationNumber || useVerificationMutation.isPending || countdown.isExpired;
-
-  const maskPhone = (s: string) => s.replace(/(\d{3})(\d+)(\d{4})/, (_, a, b, c) => `${a}-****-${c}`);
 
   return (
     <div className={$.invitation}>
@@ -213,7 +229,7 @@ export default function Invitation() {
           <div className={$.modalBox}>
             <div className={$.modalTitle}>인증번호를 보냈어요</div>
             <div className={$.modalText}>
-              입력하신 번호 <b>{phoneNumber ? maskPhone(phoneNumber) : ""}</b> 로 인증번호를 발송했어요.<br />
+              입력하신 번호로 인증번호를 발송했어요.<br />
               유효시간은 <b>3분</b>이에요. 문자 메시지를 확인해주세요.
             </div>
             <div className={$.modalActions}>
