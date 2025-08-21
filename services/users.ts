@@ -1,8 +1,11 @@
+export type CodesRes = { code: number; message: string; data: { status: boolean; deadline?: string } };
+export type VerifyRes = { code: number; message: string; data: { status: boolean } };
+
 export async function fetchUserVerificationCodes(
   phoneNumber: string,
   token: string,
-) {
-  return fetch(`http://15.164.39.230:8000/api/v0/users/verification-codes`, {
+): Promise<CodesRes> {
+  const res = await fetch(`http://15.164.39.230:8000/api/v0/users/verification-codes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,14 +13,19 @@ export async function fetchUserVerificationCodes(
     },
     body: JSON.stringify({ phoneNumber }),
   });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    throw new Error(txt || "인증번호 발송 실패");
+  }
+  return res.json() as Promise<CodesRes>;
 }
 
 export async function fetchUserVerification(
   phoneNumber: string,
   verificationNumber: string,
   token: string,
-) {
-  return fetch(`http://15.164.39.230:8000/api/v0/users/verification`, {
+): Promise<VerifyRes> {
+  const res = await fetch(`http://15.164.39.230:8000/api/v0/users/verification`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -25,6 +33,11 @@ export async function fetchUserVerification(
     },
     body: JSON.stringify({ phoneNumber, verificationNumber }),
   });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    throw new Error(txt || "인증 실패");
+  }
+  return res.json() as Promise<VerifyRes>;
 }
 
 export async function fetchUserRegister(
@@ -35,7 +48,7 @@ export async function fetchUserRegister(
 ) {
   console.log({ introduction, verificationNumber, phoneNumber, token });
   const response = await fetch(
-    "http://15.164.39.230:8000/api/v0/users/register",
+    "http://15.164.39.230:8000/api/v0/users/signup",
     {
       method: "POST",
       headers: {
