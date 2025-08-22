@@ -116,3 +116,96 @@ export async function fetchUserProfile(
 
   return text ? (JSON.parse(text) as ProfileCreateRes) : { code: 200, message: "ok" };
 }
+
+
+type UploadImageDTO = {
+  code: number;
+  message: string;
+  data: { profileImgId: number; profileImgUrl: string };
+};
+
+type ImageListItemDTO = {
+  profileImgId: number;
+  profileImgUrl: string;
+  isThumbnail?: boolean;
+};
+type ImageListDTO = {
+  code: number;
+  message: string;
+  data: ImageListItemDTO[];
+};
+
+export type UserImage = {
+  imageId: number;
+  url: string;
+  isThumbnail?: boolean; // 서버의 isThumbnail
+  isMain?: boolean;      // UI alias (= isThumbnail)
+};
+
+export type UserImagesCache = {
+  code: number;
+  message: string;
+  data: UserImage[];
+};
+
+export async function uploadUserImage(file: File, token: string): Promise<UserImage> {
+  const form = new FormData();
+  form.append("file", file);
+
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: form,
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(parseErrText(text));
+
+  const j = JSON.parse(text) as UploadImageDTO;
+  return {
+    imageId: j.data.profileImgId,
+    url: j.data.profileImgUrl,
+    isThumbnail: false,
+    isMain: false,
+  };
+}
+
+export async function getUserImages(token: string): Promise<UserImagesCache> {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+    method: "GET",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(parseErrText(text));
+
+  const j = JSON.parse(text) as ImageListDTO;
+  return {
+    code: j.code,
+    message: j.message,
+    data: j.data.map(d => ({
+      imageId: d.profileImgId,
+      url: d.profileImgUrl,
+      isThumbnail: Boolean(d.isThumbnail),
+      isMain: Boolean(d.isThumbnail),
+    })),
+  };
+}
+
+export async function deleteUserImage(imageId: number | string, token: string) {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ profileImgId: imageId }),
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(parseErrText(text));
+  return JSON.parse(text);
+}
+
+function parseErrText(text: string) {
+  try {
+    const j = JSON.parse(text);
+    return j?.detail || j?.message || text || "요청 실패";
+  } catch {
+    return text || "요청 실패";
+  }
+}
