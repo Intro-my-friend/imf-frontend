@@ -46,36 +46,38 @@ export default function CoverPhotoPage() {
     if (defaultSelected != null) setSelectedId(defaultSelected);
   }, [defaultSelected]);
 
-  const saveMut = useMutation({
-    mutationFn: withJwt((token) =>
-      setUserMainImage(selectedId as number | string, token)
-    ),
-    onSuccess: () => {
-      // 캐시 업데이트: 선택한 것만 썸네일 true, 나머지 false
+  const saveMut = useMutation<
+    { code: number; message: string }, // TData
+    Error,                              // TError
+    number | string                     // TVariables (imageId)
+  >({
+    mutationFn: withJwt((token, imageId) => setUserMainImage(imageId, token)),
+    onSuccess: (_res, imageId) => {
+      // 선택한 이미지 기준으로 캐시 갱신(대표 1장)
       qc.setQueryData<UserImagesCache>(["userImages"], (old) => {
         if (!old) return old;
         return {
           ...old,
           data: old.data.map((it) =>
-            it.imageId === selectedId
+            it.imageId === imageId
               ? { ...it, isThumbnail: true, isMain: true }
               : { ...it, isThumbnail: false, isMain: false }
           ),
         };
       });
-      router.push("/profile/contact"); // 다음 단계 라우트
+      router.push("/profile/contact"); // 다음 단계
     },
     onError: (e) => alert(parseErr(e)),
   });
 
+
   const onConfirm = () => {
     if (!selectedId) return;
-    // 이미 대표가 선택된 상태에서 같은 걸 눌렀다면 그냥 다음으로
     if (selectedId === defaultSelected) {
       router.push("/profile/contact");
       return;
     }
-    saveMut.mutate();
+    saveMut.mutate(selectedId); 
   };
 
   return (
