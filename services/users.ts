@@ -209,3 +209,30 @@ function parseErrText(text: string) {
     return text || "요청 실패";
   }
 }
+
+
+// 대표(썸네일) 이미지 설정
+export async function setUserMainImage(
+  imageId: number | string,
+  token: string
+): Promise<{ code: number; message: string }> {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ profileImgId: imageId }), // 서버 스펙에 맞게 key 유지
+  });
+
+  const text = await res.text().catch(() => "");
+  if (!res.ok) {
+    try {
+      const j = JSON.parse(text);
+      throw new Error(j?.detail || j?.message || text || "대표 이미지 설정 실패");
+    } catch {
+      throw new Error(text || "대표 이미지 설정 실패");
+    }
+  }
+  return text ? JSON.parse(text) : { code: 200, message: "ok" };
+}
