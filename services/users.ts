@@ -236,3 +236,36 @@ export async function setUserMainImage(
   }
   return text ? JSON.parse(text) : { code: 200, message: "ok" };
 }
+
+
+// ---- 연락처 저장 ----
+export type ContactType = "PHONE" | "KAKAO" | "INSTAGRAM";
+export interface SaveContactBody {
+  contactType: ContactType;
+  contact: string;
+}
+
+export async function saveUserContact(
+  body: SaveContactBody,
+  token: string
+): Promise<{ code: number; message: string }> {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/contact", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  const text = await res.text().catch(() => "");
+  if (!res.ok) {
+    try {
+      const j = JSON.parse(text);
+      throw new Error(j?.detail || j?.message || text || "연락처 저장 실패");
+    } catch {
+      throw new Error(text || "연락처 저장 실패");
+    }
+  }
+  return text ? JSON.parse(text) : { code: 200, message: "ok" };
+}
