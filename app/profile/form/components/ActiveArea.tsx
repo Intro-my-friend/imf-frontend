@@ -1,5 +1,5 @@
-import { regions } from "@/app/profile/components/regions";
-import { ProfileInputType } from "@/app/profile/page";
+import { regions } from "@/app/profile/form/components/regions";
+import { ProfileInputType } from "@/app/profile/form/page";
 import { DefaultProps } from "@/type/props";
 import { Box, FormControl, MenuItem, Select } from "@mui/material";
 
@@ -8,10 +8,10 @@ type Props = {
   setProfileInput: React.Dispatch<React.SetStateAction<ProfileInputType>>;
 } & DefaultProps;
 
-function Residence({ profileInput, setProfileInput, className }: Props) {
+function ActiveArea({ profileInput, setProfileInput, className }: Props) {
   const sidoOptions = regions.map((r) => r.sido);
   const selectedSido = regions.find(
-    (r) => r.sido === profileInput.residenceSido,
+    (r) => r.sido === profileInput.activeAreaSido,
   );
   const gugunOptions = selectedSido ? selectedSido.gugun : [];
 
@@ -25,13 +25,13 @@ function Residence({ profileInput, setProfileInput, className }: Props) {
     >
       <FormControl variant="outlined" size="small" sx={{ flex: 1 }}>
         <Select
-          value={profileInput.residenceSido || ""}
+          value={profileInput.activeAreaSido || ""}
           displayEmpty
           onChange={(e) => {
             setProfileInput((prev) => ({
               ...prev,
-              residenceSido: e.target.value,
-              residenceGugun: "",
+              activeAreaSido: e.target.value,
+              activeAreaGugun: "",
             }));
           }}
         >
@@ -46,13 +46,13 @@ function Residence({ profileInput, setProfileInput, className }: Props) {
 
       <FormControl variant="outlined" size="small" sx={{ flex: 1 }}>
         <Select
-          value={profileInput.residenceGugun || ""}
+          value={profileInput.activeAreaGugun || ""}
           displayEmpty
-          disabled={!profileInput.residenceSido}
+          disabled={!profileInput.activeAreaSido}
           onChange={(e) => {
             setProfileInput((prev) => ({
               ...prev,
-              residenceGugun: e.target.value,
+              activeAreaGugun: e.target.value,
             }));
           }}
         >
@@ -68,4 +68,4 @@ function Residence({ profileInput, setProfileInput, className }: Props) {
   );
 }
 
-export default Residence;
+export default ActiveArea;

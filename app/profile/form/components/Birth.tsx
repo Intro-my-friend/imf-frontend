@@ -1,4 +1,4 @@
-import { ProfileInputType } from "@/app/profile/page";
+import { ProfileInputType } from "@/app/profile/form/page";
 import { DefaultProps } from "@/type/props";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
