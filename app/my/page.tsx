@@ -47,8 +47,7 @@ export default function My() {
       const data = useUserInfoQuery.data.data
       const isVerified = data.isVerified;
       if (!isVerified) {
-        alert("인증 안된 유저!");
-        //router.push("/register/verify"); // 리다이렉트 경로 입력
+        router.push("/register");
       }
       setSelectedTab(data.displayList ? "introduce" : "recommend");
     }
@@ -85,6 +84,10 @@ export default function My() {
   };
 
   if (useUserInfoQuery.isLoading) return null;
+
+  const updateContact = () => {
+    router.push("/my/profile/contact")
+  }
 
   return (
     <div className={$.my}>
@@ -194,7 +197,7 @@ export default function My() {
           <div className={$.modalContent} onClick={(e) => e.stopPropagation()}>
             <button className={$.modalButton}>사진 변경</button>
             <button className={$.modalButton}>프로필 변경</button>
-            <button className={$.modalButton}>연락처 변경</button>
+            <button className={$.modalButton} onClick={updateContact}>연락처 변경</button>
           </div>
         </div>
       )}

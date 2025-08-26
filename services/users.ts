@@ -269,3 +269,33 @@ export async function saveUserContact(
   }
   return text ? JSON.parse(text) : { code: 200, message: "ok" };
 }
+
+export interface UserContactRes {
+  code: number;
+  message: string;
+  data: {
+    contactType: ContactType;
+    contact: string;
+  } | null;
+}
+
+// GET: 연락처 조회
+export async function getUserContact(token: string): Promise<UserContactRes> {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/contact", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const text = await res.text().catch(() => "");
+  if (!res.ok) {
+    try {
+      const j = JSON.parse(text);
+      throw new Error(j?.detail || j?.message || text || "연락처 조회 실패");
+    } catch {
+      throw new Error(text || "연락처 조회 실패");
+    }
+  }
+  return text ? JSON.parse(text) : { code: 200, message: "ok", data: null };
+}
