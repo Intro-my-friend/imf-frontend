@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { withJwt } from "@/lib/authToken";
 
 import ActiveArea from "@/app/profile/form/components/ActiveArea";
@@ -119,6 +119,7 @@ export default function ProfileForm({
   mode = "create",
 }: { mode?: Mode }) {
   const router = useRouter();
+  const qc = useQueryClient();
 
   const [profileInput, setProfileInput] = useState<ProfileInputType>({
     name: "",
@@ -142,6 +143,8 @@ export default function ProfileForm({
     queryFn: withJwt((token) => getUserProfileDetail(token)),
     enabled: mode === "edit",
     staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: "always",
   });
 
   useEffect(() => {
@@ -168,6 +171,7 @@ export default function ProfileForm({
   const updateMut = useMutation({
     mutationFn: withJwt((token, body: ProfileCreateBody) => updateUserProfile(body, token)),
     onSuccess: () => {
+      qc.removeQueries({ queryKey: ["profileDetail"] });
       router.push("/my");
     },
     onError: (err) => alert(parseServerError(err)),
