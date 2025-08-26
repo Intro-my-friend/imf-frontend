@@ -97,6 +97,19 @@ export default function My() {
     router.push("/my/profile/photos")
   }
 
+  const logout = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+  
+    try {
+      localStorage.removeItem("jwt");
+      localStorage.setItem("logout-ts", String(Date.now()));
+      localStorage.removeItem("logout-ts");
+    } catch {}
+  
+    router.replace("/login");
+  };
+
   return (
     <div className={$.my}>
       <Header text={"마이페이지"} />
@@ -161,7 +174,16 @@ export default function My() {
             </div>
             <span className={$.arrow}>›</span>
           </li>
-          <li className={$.menuItem}>
+          <li
+            className={$.menuItem}
+            role="button"
+            tabIndex={0}
+            onClick={logout}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") logout();
+            }}
+            aria-label="로그아웃"
+          >
             <div className={$.left}>
               <Icon size={24} name={"logout"} />
               <span className={$.label}>로그아웃</span>
