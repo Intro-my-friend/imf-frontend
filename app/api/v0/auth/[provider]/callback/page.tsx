@@ -24,7 +24,7 @@ export default function AuthCallback() {
           const token = data.data.token;
           if (token) {
             localStorage.setItem("jwt", token);
-            router.replace("/");
+            router.replace("/match");
           } else {
             router.replace("/register");
           }
