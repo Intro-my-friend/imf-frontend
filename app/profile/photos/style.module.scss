@@ -113,3 +113,24 @@
   background: #cfd4da; /* 비활성 회색 */
   color: #fff;
 }
+
+
+.cover {
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .card {
+    position: relative; border: 2px solid transparent; border-radius: 12px;
+    overflow: hidden; transition: transform .12s, border-color .12s, box-shadow .12s;
+    img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  }
+  .card.current { border-color: #d9d9d9; }            /* 현재 대표(회색) */
+  .card.active  { border-color: #ff7d66; box-shadow: 0 0 0 2px #ff7d6644; } /* 선택(주황) */
+
+  .badge {
+    position: absolute; top: 8px; left: 8px;
+    padding: 4px 8px; border-radius: 999px; font-size: 12px;
+    background:#9096a0;
+    color: #fff; backdrop-filter: blur(3px);
+  }
+  .badge.neutral { background: #00000066; }
+  .badge.primary { background: #ff7d66; }
+}
