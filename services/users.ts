@@ -65,20 +65,6 @@ export async function fetchUserRegister(
   return response.json();
 }
 
-
-export type ProfileCreateBody = {
-  name: string;
-  gender: "MALE" | "FEMALE";
-  birth: string;                   // "YYYYMMDD"
-  height: number;                  // 예: 175.0
-  residenceProvince: string;
-  residenceDistrict: string;
-  activeProvince: string;
-  activeDistrict: string;
-  job: string;
-  additionalData?: Record<string, string | boolean>; // 선택
-};
-
 export type ProfileCreateRes = {
   code: number;
   message: string;
@@ -297,5 +283,73 @@ export async function getUserContact(token: string): Promise<UserContactRes> {
       throw new Error(text || "연락처 조회 실패");
     }
   }
+  return text ? JSON.parse(text) : { code: 200, message: "ok", data: null };
+}
+
+// --- 타입 ---
+export type Gender = "MALE" | "FEMALE";
+
+export type ProfileCreateBody = {
+  name: string;
+  gender: Gender;
+  birth: string; // "YYYYMMDD"
+  height: number; // 170.0
+  residenceProvince: string;
+  residenceDistrict: string;
+  activeProvince: string;
+  activeDistrict: string;
+  job: string;
+  additionalData?: Record<string, string | boolean>;
+};
+
+export type ProfileDetailRes = {
+  code: number;
+  message: string;
+  data: {
+    name: string;
+    gender: Gender;
+    birth: string; // "YYYYMMDD"
+    height: number;
+    residenceProvince: string;
+    residenceDistrict: string;
+    activeProvince: string;
+    activeDistrict: string;
+    job: string;
+    additionalData?: Record<string, string | boolean> | null;
+  } | null;
+};
+
+// --- 생성(POST) ---
+export async function createUserProfile(body: ProfileCreateBody, token: string) {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/profile", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(body),
+  });
+  const text = await res.text().catch(() => "");
+  if (!res.ok) throw new Error(parseErrText(text));
+  return text ? JSON.parse(text) : { code: 200, message: "ok" };
+}
+
+// --- 수정(PATCH) ---
+export async function updateUserProfile(body: Partial<ProfileCreateBody>, token: string) {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/profile", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(body), // 전체/부분 모두 허용. 필요 시 diff만 보낼 수도 있음
+  });
+  const text = await res.text().catch(() => "");
+  if (!res.ok) throw new Error(parseErrText(text));
+  return text ? JSON.parse(text) : { code: 200, message: "ok" };
+}
+
+// --- 상세(GET) (수정 프리필용) ---
+export async function getUserProfileDetail(token: string): Promise<ProfileDetailRes> {
+  const res = await fetch("http://15.164.39.230:8000/api/v0/users/profile", {
+    method: "GET",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+  });
+  const text = await res.text().catch(() => "");
+  if (!res.ok) throw new Error(parseErrText(text));
   return text ? JSON.parse(text) : { code: 200, message: "ok", data: null };
 }

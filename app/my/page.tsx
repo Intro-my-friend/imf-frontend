@@ -89,6 +89,10 @@ export default function My() {
     router.push("/my/profile/contact")
   }
 
+  const updateProfile = () => {
+    router.push("/my/profile/form")
+  }
+
   return (
     <div className={$.my}>
       <Header text={"마이페이지"} />
@@ -196,7 +200,7 @@ export default function My() {
         <div className={$.modalOverlay} onClick={() => setIsProfileModal(false)}>
           <div className={$.modalContent} onClick={(e) => e.stopPropagation()}>
             <button className={$.modalButton}>사진 변경</button>
-            <button className={$.modalButton}>프로필 변경</button>
+            <button className={$.modalButton} onClick={updateProfile}>프로필 변경</button>
             <button className={$.modalButton} onClick={updateContact}>연락처 변경</button>
           </div>
         </div>
@@ -220,7 +224,6 @@ export default function My() {
                 className={$.modalConfirm}
                 onClick={() => {
                   setIsProfileRequiredOpen(false);
-                  // router.push("/profile/edit");
                 }}
               >
                 프로필 작성
