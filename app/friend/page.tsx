@@ -139,7 +139,7 @@ export default function Friend() {
         <div className={$.modal}>
           <div className={$.modalBox}>
             <div className={$.modalTitle}>알림</div>
-            <div className={$.modalText}>{phone} 님은 이미 내친소의 회원입니다.</div>
+            <div className={$.modalText}>{phone} 님은 이미 아는사이의 회원입니다.</div>
             <button className={$.modalConfirm} onClick={() => setModal("none")}>확인</button>
           </div>
         </div>

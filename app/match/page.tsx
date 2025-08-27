@@ -103,7 +103,7 @@ export default function MatchHomePage() {
   if (isIntroducerMode) {
     return (
       <div className={$.page}>
-        <Header text={"내친소"} />
+        <Header text={"아는사이"} />
         <main className={`${$.main} ${$.centered}`}>
           <div className={$.pill}>주선자 모드</div>
           <p className={$.muted}>해당 모드에서는 매칭을 받을 수 없어요.</p>
@@ -120,7 +120,7 @@ export default function MatchHomePage() {
   /** 기본 화면 */
   return (
     <div className={$.page}>
-      <Header text={"내친소"} />
+      <Header text={"아는사이"} />
       <main className={$.main}>
         {/* 타이머 (가운데) */}
         <div className={$.timerWrap}>
