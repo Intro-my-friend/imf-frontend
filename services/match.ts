@@ -36,7 +36,7 @@ export async function fetchMatchList(
   type: MatchType
 ): Promise<MatchListRes> {
   const res = await fetch(
-    `http://api.anunsai.com/api/v0/match?type=${type}`,
+    `https://api.anunsai.com/api/v0/match?type=${type}`,
     {
       method: "GET",
       headers: {

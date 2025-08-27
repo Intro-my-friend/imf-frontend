@@ -15,7 +15,7 @@ export interface MatchListRes {
 
 /** 매칭 리스트 */
 export async function fetchMatchList(token: string): Promise<MatchListRes> {
-  const res = await fetch(`http://api.anunsai.com/api/v0/match/recommend`, {
+  const res = await fetch(`https://api.anunsai.com/api/v0/match/recommend`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export async function fetchMatchDetail(
   token: string
 ) {
     const response = await fetch(
-      `http://api.anunsai.com/api/v0/match/${id}`, 
+      `https://api.anunsai.com/api/v0/match/${id}`, 
       {
         method: "GET",
         headers: {
@@ -88,7 +88,7 @@ export async function respondMatch(
   token: string
 ): Promise<MatchDecisionRes> {
   const res = await fetch(
-    `http://api.anunsai.com/api/v0/match/${id}`,
+    `https://api.anunsai.com/api/v0/match/${id}`,
     {
       method: "PATCH",
       headers: {

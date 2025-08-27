@@ -2,7 +2,7 @@ export async function fetchUserInfo(
   token: string,
 ) {
   const response = await fetch(
-    `http://api.anunsai.com/api/v0/users`, 
+    `https://api.anunsai.com/api/v0/users`, 
     {
       method: "GET",
       headers: {
@@ -21,7 +21,7 @@ export async function patchPurpose(
   token: string
 ) {
   const response =  await fetch(
-    `http://api.anunsai.com/api/v0/users/matching-settings`,
+    `https://api.anunsai.com/api/v0/users/matching-settings`,
     {
       method: "PATCH",
       headers: {
@@ -40,7 +40,7 @@ export async function getUserImages(
   token: string,
 ) {
   const response = await fetch(
-    `http://api.anunsai.com/api/v0/users/images`, 
+    `https://api.anunsai.com/api/v0/users/images`, 
     {
       method: "GET",
       headers: {
