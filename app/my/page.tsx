@@ -66,6 +66,7 @@ export default function My() {
     if (mode === "introduce" && !hasProfile) {
       setIsProfileRequiredOpen(true);
       setModelModal("none"); // 다른 모달이 열려있지 않도록
+      router.push("/profile");
       return;
     }
     setModelModal(mode);
