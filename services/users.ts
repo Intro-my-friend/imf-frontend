@@ -5,7 +5,7 @@ export async function fetchUserVerificationCodes(
   phoneNumber: string,
   token: string,
 ): Promise<CodesRes> {
-  const res = await fetch(`http://15.164.39.230:8000/api/v0/users/verification-codes`, {
+  const res = await fetch(`http://api.anunsai.com/api/v0/users/verification-codes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export async function fetchUserVerification(
   verificationNumber: string,
   token: string,
 ): Promise<VerifyRes> {
-  const res = await fetch(`http://15.164.39.230:8000/api/v0/users/verification`, {
+  const res = await fetch(`http://api.anunsai.com/api/v0/users/verification`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export async function fetchUserRegister(
   token: string,
 ) {
   const response = await fetch(
-    "http://15.164.39.230:8000/api/v0/users/signup",
+    "http://api.anunsai.com/api/v0/users/signup",
     {
       method: "POST",
       headers: {
@@ -99,7 +99,7 @@ export async function uploadUserImage(file: File, token: string): Promise<UserIm
   const form = new FormData();
   form.append("file", file);
 
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/images", {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: form,
@@ -117,7 +117,7 @@ export async function uploadUserImage(file: File, token: string): Promise<UserIm
 }
 
 export async function getUserImages(token: string): Promise<UserImagesCache> {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/images", {
     method: "GET",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
   });
@@ -138,7 +138,7 @@ export async function getUserImages(token: string): Promise<UserImagesCache> {
 }
 
 export async function deleteUserImage(imageId: number | string, token: string) {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/images", {
     method: "DELETE",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     body: JSON.stringify({ profileImgId: imageId }),
@@ -163,7 +163,7 @@ export async function setUserMainImage(
   imageId: number | string,
   token: string
 ): Promise<{ code: number; message: string }> {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/images", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/images", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -196,7 +196,7 @@ export async function saveUserContact(
   body: SaveContactBody,
   token: string
 ): Promise<{ code: number; message: string }> {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/contact", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/contact", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -228,7 +228,7 @@ export interface UserContactRes {
 
 // GET: 연락처 조회
 export async function getUserContact(token: string): Promise<UserContactRes> {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/contact", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/contact", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -282,7 +282,7 @@ export type ProfileDetailRes = {
 
 // --- 생성(POST) ---
 export async function createUserProfile(body: ProfileCreateBody, token: string) {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/profile", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/profile", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     body: JSON.stringify(body),
@@ -294,7 +294,7 @@ export async function createUserProfile(body: ProfileCreateBody, token: string) 
 
 // --- 수정(PATCH) ---
 export async function updateUserProfile(body: Partial<ProfileCreateBody>, token: string) {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/profile", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/profile", {
     method: "PATCH",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     body: JSON.stringify(body), // 전체/부분 모두 허용. 필요 시 diff만 보낼 수도 있음
@@ -306,7 +306,7 @@ export async function updateUserProfile(body: Partial<ProfileCreateBody>, token:
 
 // --- 상세(GET) (수정 프리필용) ---
 export async function getUserProfileDetail(token: string): Promise<ProfileDetailRes> {
-  const res = await fetch("http://15.164.39.230:8000/api/v0/users/profile", {
+  const res = await fetch("http://api.anunsai.com/api/v0/users/profile", {
     method: "GET",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
   });

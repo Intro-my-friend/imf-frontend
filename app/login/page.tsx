@@ -4,7 +4,7 @@ import $ from "./page.module.scss";
 
 export default function Login() {
   const handleSocialLogin = (provider: "kakao" | "naver") => {
-    window.location.href = `http://15.164.39.230:8000/api/v0/auth/${provider}/login`;
+    window.location.href = `http://api.anunsai.com/api/v0/auth/${provider}/login`;
   };
 
   return (

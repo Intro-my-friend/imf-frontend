@@ -14,7 +14,7 @@ export default function AuthCallback() {
 
     if (code && state) {
       fetch(
-        `http://15.164.39.230:8000/api/v0/auth/kakao/callback?code=${code}&state=${state}`,
+        `http://api.anunsai.com/api/v0/auth/kakao/callback?code=${code}&state=${state}`,
       )
         .then((res) => {
           if (!res.ok) throw new Error("API 오류");

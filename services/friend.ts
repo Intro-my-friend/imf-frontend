@@ -2,7 +2,7 @@ export async function fetchUserInfo(
   token: string,
 ) {
   const response = await fetch(
-    `http://15.164.39.230:8000/api/v0/users`, 
+    `http://api.anunsai.com/api/v0/users`, 
     {
       method: "GET",
       headers: {
@@ -21,7 +21,7 @@ export async function checkPhoneExists(
   token: string,
 ) {
   const response = await fetch(
-    `http://15.164.39.230:8000/api/v0/contact/check?phoneNumber=${encodeURIComponent(phone)}`,
+    `http://api.anunsai.com/api/v0/contact/check?phoneNumber=${encodeURIComponent(phone)}`,
     {
       method: "GET",
       headers: {
@@ -40,7 +40,7 @@ export async function sendInvite(
   token: string
 ) {
   const response =  await fetch(
-    `http://15.164.39.230:8000/api/v0/contact`,
+    `http://api.anunsai.com/api/v0/contact`,
     {
       method: "POST",
       headers: {
@@ -59,7 +59,7 @@ export async function fetchMyInvitations(
   token: string,
 ) {
   const response = await fetch(
-    "http://15.164.39.230:8000/api/v0/contact", 
+    "http://api.anunsai.com/api/v0/contact", 
     {
       method: "GET",
       headers: {

@@ -36,7 +36,7 @@ export async function fetchMatchList(
   type: MatchType
 ): Promise<MatchListRes> {
   const res = await fetch(
-    `http://15.164.39.230:8000/api/v0/match?type=${type}`,
+    `http://api.anunsai.com/api/v0/match?type=${type}`,
     {
       method: "GET",
       headers: {
