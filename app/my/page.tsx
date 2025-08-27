@@ -29,7 +29,11 @@ export default function My() {
   const useUserInfoQuery = useQuery({
     queryKey: ["userInfo"],
     queryFn: withJwt((token) => fetchUserInfo(token)),
-    staleTime: 1000 * 60,
+    staleTime: 0,                   // 항상 stale
+    gcTime: 0,                   // 관찰자 없으면 즉시 GC → 재진입 시 매번 새로 요청
+    refetchOnMount: "always",       // 마운트될 때 항상 refetch
+    refetchOnWindowFocus: "always", // 탭으로 돌아올 때도 refetch
+    refetchOnReconnect: "always",   // 네트워크 재연결 시 refetch
   });
 
   const { data: profileUrl } = useQuery({
