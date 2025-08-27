@@ -44,7 +44,14 @@ export default function My() {
       return thumb?.profileImgUrl ?? null;
     },
     staleTime: 60_000,
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
+
+  const [imgSrc, setImgSrc] = useState<string | StaticImageData>(defaultProfileImage);
+  useEffect(() => {
+    setImgSrc(profileUrl || defaultProfileImage); // string 또는 StaticImageData
+  }, [profileUrl]);
 
   useEffect(() => {
     if (useUserInfoQuery.isSuccess) {
@@ -151,7 +158,8 @@ export default function My() {
             }}
           >
             <Image
-              src={profileUrl ?? defaultProfileImage}
+              key={typeof imgSrc === "string" ? imgSrc : "default-profile"}
+              src={imgSrc}
               alt="Profile"
               width={140}
               height={140}
@@ -159,7 +167,7 @@ export default function My() {
               style={{ objectFit: "cover" }}
               onError={(e) => {
                 // 외부 URL 깨지면 기본 이미지로 교체
-                (e.currentTarget as HTMLImageElement).src = defaultProfileImage.src;
+                if (imgSrc !== defaultProfileImage) setImgSrc(defaultProfileImage);
               }}
               priority
             />
