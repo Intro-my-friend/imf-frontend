@@ -22,7 +22,8 @@ export default function AuthCallback() {
         })
         .then((data) => {
           const token = data.data.token;
-          if (token) {
+          const isVerify = data.data.isVerify;
+          if (token && isVerify) {
             localStorage.setItem("jwt", token);
             router.replace("/match");
           } else {
