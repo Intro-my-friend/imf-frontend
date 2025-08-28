@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import Icon from "@/component/Icon";
 import { withJwt } from "@/lib/authToken";
 import { fetchMatchList, type MatchListItem } from "@/services/profile";
+import { fetchUserInfo } from "@/services/my";
 import $ from "./style.module.scss";
 
 const toAge = (birth?: string) => {
@@ -22,6 +23,27 @@ const toAge = (birth?: string) => {
 
 export default function MatchListPage() {
   const router = useRouter();
+
+  const userQ = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: withJwt((token) => fetchUserInfo(token)),
+    staleTime: 60_000,
+  });
+
+  // 2) 리다이렉트는 effect에서
+  useEffect(() => {
+    if (userQ.isSuccess) {
+      const isVerified = userQ.data.data.isVerified;
+      if (!isVerified) router.push("/register");
+    }
+  }, [userQ.isSuccess, userQ.data, router]);
+
+  useEffect(() => {
+    if (userQ.isError) {
+      console.error("유저 인증 실패:", userQ.error);
+      router.push("/login");
+    }
+  }, [userQ.isError, userQ.error, router]);
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["matchList"],
