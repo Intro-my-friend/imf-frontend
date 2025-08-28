@@ -65,8 +65,7 @@ export default function Friend() {
     if (useUserInfoQuery.isSuccess) {
       const isVerified = useUserInfoQuery.data.data.isVerified;
       if (!isVerified) {
-        alert("인증 안된 유저!");
-        //router.push("/register/verify"); // 리다이렉트 경로 입력
+        router.push("/register");
       }
     }
   }, [useUserInfoQuery.data, useUserInfoQuery.isSuccess, router]);

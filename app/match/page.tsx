@@ -70,26 +70,41 @@ export default function MatchHomePage() {
   const [tab, setTab] = useState<MatchType>("MATCH");
   const [modal, setModal] = useState<ModalType>("NONE");
 
-  // 1) 사용자 정보 (displayList / isProfile 판단)
-  const { data: userInfo } = useQuery({
+  const userQ = useQuery({
     queryKey: ["userInfo"],
     queryFn: withJwt((token) => fetchUserInfo(token)),
     staleTime: 60_000,
   });
-  const me: UserInfo | undefined = (userInfo as any)?.data;
 
-  const isIntroducerMode = me?.displayList === false; // 주선자 모드
-  const hasProfile = me?.isProfile === true;          // 프로필 여부
+  // 2) 리다이렉트는 effect에서
+  useEffect(() => {
+    if (userQ.isSuccess) {
+      const isVerified = userQ.data.data.isVerified;
+      if (!isVerified) router.push("/register");
+    }
+  }, [userQ.isSuccess, userQ.data, router]);
 
-  // 2) 최근 활동 리스트 (탭 타입으로 호출) — introducer 모드면 요청 안 함
-  const { data: listRes, isFetching, isPending } = useQuery<MatchListRes>({
+  useEffect(() => {
+    if (userQ.isError) {
+      console.error("유저 인증 실패:", userQ.error);
+      router.push("/login");
+    }
+  }, [userQ.isError, userQ.error, router]);
+
+  // 3) 파생 값 (렌더에서 쓰기만)
+  const me: UserInfo | undefined = userQ.data?.data;
+  const isIntroducerMode = me?.displayList === false;
+  const hasProfile = me?.isProfile === true;
+
+  // 4) 두 번째 쿼리도 항상 '호출'하되 실행은 enabled로 제어
+  const recentQ = useQuery<MatchListRes>({
     queryKey: ["recentActivity", tab],
     queryFn: withJwt((token) => fetchMatchList(token, tab)),
-    enabled: !isIntroducerMode,
-    placeholderData: keepPreviousData,   // ✅ v5 방식
+    enabled: userQ.isSuccess && !isIntroducerMode, // ← 사용자 정보 준비 + 주선자모드 아님
+    placeholderData: keepPreviousData,
     staleTime: 0,
   });
-  const items: MatchListItem[] = (listRes as any)?.data ?? [];
+  const items: MatchListItem[] = (recentQ.data as any)?.data ?? [];
 
   const countdown = useCountdownToNext8AM();
 
@@ -153,8 +168,8 @@ export default function MatchHomePage() {
             ))}
           </div>
 
-          <div className={$.grid} aria-busy={isFetching || isPending}>
-            {isPending ? (
+          <div className={$.grid} aria-busy={recentQ.isFetching || recentQ.isPending}>
+            {recentQ.isPending ? (
               <div className={$.empty}>불러오는 중…</div>
             ) : items.length === 0 ? (
               <div className={$.empty}>새로운 인연을 만나보세요!</div>
