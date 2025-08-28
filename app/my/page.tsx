@@ -73,7 +73,6 @@ export default function My() {
     if (mode === "introduce" && !hasProfile) {
       setIsProfileRequiredOpen(true);
       setModelModal("none"); // 다른 모달이 열려있지 않도록
-      router.push("/profile");
       return;
     }
     setModelModal(mode);
@@ -121,6 +120,10 @@ export default function My() {
   
     router.replace("/login");
   };
+
+  const createProfile = () => {
+    router.push("/profile");
+  }
 
   return (
     <div className={$.my}>
@@ -263,6 +266,7 @@ export default function My() {
                 className={$.modalConfirm}
                 onClick={() => {
                   setIsProfileRequiredOpen(false);
+                  createProfile();
                 }}
               >
                 프로필 작성
