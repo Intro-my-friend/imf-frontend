@@ -49,6 +49,7 @@ export default function MatchListPage() {
     queryKey: ["matchList"],
     queryFn: withJwt((token) => fetchMatchList(token)),
     staleTime: 60_000,
+    enabled: userQ.isSuccess && userQ.data?.data.isVerified === true,
   });
 
   const list: MatchListItem[] = useMemo(() => data?.data ?? [], [data]);
