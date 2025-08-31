@@ -23,11 +23,15 @@ export default function AuthCallback() {
         .then((data) => {
           const token = data.data.token;
           const isVerify = data.data.isVerify;
-          if (token && isVerify) {
+          if (token) {
             localStorage.setItem("jwt", token);
-            router.replace("/match");
+            if (isVerify) {
+              router.replace("/match");
+            } else {
+              router.replace("/register");
+            }
           } else {
-            router.replace("/register");
+            router.replace("/login");
           }
         })
         .catch(() => {
