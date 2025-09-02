@@ -76,22 +76,6 @@ export default function MatchHomePage() {
     staleTime: 60_000,
   });
 
-  // 2) 리다이렉트는 effect에서
-  useEffect(() => {
-    if (userQ.isSuccess) {
-      const isVerified = userQ.data.data.isVerified;
-      if (!isVerified) router.push("/register");
-    }
-  }, [userQ.isSuccess, userQ.data, router]);
-
-  useEffect(() => {
-    if (userQ.isError) {
-      console.error("유저 인증 실패:", userQ.error);
-      router.push("/login");
-    }
-  }, [userQ.isError, userQ.error, router]);
-
-  // 3) 파생 값 (렌더에서 쓰기만)
   const me: UserInfo | undefined = userQ.data?.data;
   const isIntroducerMode = me?.displayList === false;
   const hasProfile = me?.isProfile === true;

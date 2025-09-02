@@ -30,21 +30,6 @@ export default function MatchListPage() {
     staleTime: 60_000,
   });
 
-  // 2) 리다이렉트는 effect에서
-  useEffect(() => {
-    if (userQ.isSuccess) {
-      const isVerified = userQ.data.data.isVerified;
-      if (!isVerified) router.push("/register");
-    }
-  }, [userQ.isSuccess, userQ.data, router]);
-
-  useEffect(() => {
-    if (userQ.isError) {
-      console.error("유저 인증 실패:", userQ.error);
-      router.push("/login");
-    }
-  }, [userQ.isError, userQ.error, router]);
-
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["matchList"],
     queryFn: withJwt((token) => fetchMatchList(token)),

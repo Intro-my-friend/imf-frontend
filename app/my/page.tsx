@@ -55,11 +55,7 @@ export default function My() {
 
   useEffect(() => {
     if (useUserInfoQuery.isSuccess) {
-      const data = useUserInfoQuery.data.data
-      const isVerified = data.isVerified;
-      if (!isVerified) {
-        router.push("/register");
-      }
+      const data = useUserInfoQuery.data.data;
       setSelectedTab(data.displayList ? "introduce" : "recommend");
     }
   }, [useUserInfoQuery.data, useUserInfoQuery.isSuccess, router]);

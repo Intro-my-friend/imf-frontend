@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -8,7 +8,7 @@ import Header from "@/component/Header";
 import Footer from "@/component/Footer";
 import { withJwt } from "@/lib/authToken";
 import { 
-  fetchUserInfo, checkPhoneExists, sendInvite, fetchMyInvitations
+  checkPhoneExists, sendInvite, fetchMyInvitations
  } from "@/services/friend";
 import $ from "./style.module.scss";
 
@@ -37,12 +37,6 @@ export default function Friend() {
     queryFn: withJwt((token) => fetchMyInvitations(token)),
   });
 
-  const useUserInfoQuery = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: withJwt((token) => fetchUserInfo(token)),
-    staleTime: 1000 * 60,
-  });
-
   const inviteMutation = useMutation({
     mutationFn: withJwt(
       (token, params: { phone: string }) =>
@@ -59,23 +53,6 @@ export default function Friend() {
       console.error("초대 실패:", error);
     },
   });
-
-
-  useEffect(() => {
-    if (useUserInfoQuery.isSuccess) {
-      const isVerified = useUserInfoQuery.data.data.isVerified;
-      if (!isVerified) {
-        router.push("/register");
-      }
-    }
-  }, [useUserInfoQuery.data, useUserInfoQuery.isSuccess, router]);
-
-  if (useUserInfoQuery.isLoading) return null;
-  if (useUserInfoQuery.isError) {
-    console.error("유저 인증 실패:", useUserInfoQuery.error);
-    router.push("/login");
-    return null;
-  }
 
   const handleCheckPhone = async () => {
     const checkPhone = withJwt(
