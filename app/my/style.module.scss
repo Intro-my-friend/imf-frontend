@@ -206,3 +206,53 @@
   padding: 12px;
   font-size: 16px;
 }
+
+/* === Ticket Bar === */
+.ticketBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto 12px auto;
+  padding: 8px 12px;   /* 👈 줄임 */
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.ticketLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;   /* 👈 간격 줄임 */
+}
+
+.ticketLabel {
+  font-size: 14px;
+  color: #666;
+}
+
+.ticketCount {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+}
+
+.ticketChargeBtn {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 8px;
+  background: #ff6b5c;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .06s ease;
+}
+
+.ticketChargeBtn:disabled {
+  background: #666;
+}

@@ -36,6 +36,12 @@ export default function My() {
     refetchOnReconnect: "always",   // 네트워크 재연결 시 refetch
   });
 
+  const ticketCount = Math.max(0, Number(
+      useUserInfoQuery.data?.data?.ticketAmount ??
+      0
+    ) || 0
+  );
+
   const { data: profileUrl } = useQuery({
     queryKey: ["profileImage"],
     queryFn: withJwt((token) => getUserImages(token)),
@@ -174,6 +180,23 @@ export default function My() {
               <Icon size={24} name={"pencil"} />
             </button>
           </div>
+        </div>
+
+        <div className={$.ticketBar} role="region" aria-label="티켓 보유량">
+          <div className={$.ticketLeft}>
+            <Icon size={20} name={"coffee"} />
+            <span className={$.ticketLabel}>보유 커피 : </span>
+            <strong className={$.ticketCount} aria-live="polite">
+              {ticketCount.toLocaleString()}
+            </strong>
+          </div>
+          <button
+            className={$.ticketChargeBtn}
+            aria-label="티켓 충전하기"
+            disabled={true}
+          >
+            충전
+          </button>
         </div>
 
         <div className={$.adBanner}>광고자리</div>
