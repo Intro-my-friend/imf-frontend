@@ -270,15 +270,9 @@ a.secondary {
 }
 
 /* 일러스트 박스 데모 */
-.illustration { margin-top: 40px; text-align: center; }
-.fakeImage {
-  width: 100%;
-  max-width: 600px;
-  height: 260px;
-  background: linear-gradient(135deg, #ffeb3b33, #2196f333);
-  border-radius: 24px;
-  display: flex; align-items: center; justify-content: center;
-  color: #888; font-size: 20px;
+.illustration {
+  margin-top: 40px;
+  text-align: center;
 }
 
 /* 다크 모드 보정 */
@@ -314,4 +308,21 @@ a.secondary {
 .footerNav a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.illustration {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.imageBox {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 260px; /* 원하는 박스 높이 */
+  margin: 0 auto;
+}
+
+.heroImage {
+  object-fit: contain; /* 비율 유지해서 박스 안에 맞춤 */
 }
