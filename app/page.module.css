@@ -166,3 +166,152 @@ a.secondary {
     filter: invert();
   }
 }
+
+/* 전역 포인트 컬러 */
+:root {
+  --accent-1: #FF7968;   /* 코랄 */
+  --accent-2: #FFD966;   /* 옐로 */
+  --accent-3: #6EC6FF;   /* 블루 */
+}
+
+/* 배경 블롭: 섹션 안에서만 보이게 함 */
+.page { position: relative; }   /* 추가 */
+.main { position: relative; }   /* 추가 */
+
+.page::before,
+.page::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  filter: blur(60px);
+  opacity: 0.5;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.page::before {
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  background: #FFE0E0; /* 연핑크 */
+}
+.page::after {
+  bottom: -100px; left: -40px;
+  width: 280px; height: 280px;
+  background: #D6FFF5; /* 민트 */
+}
+.main::before {
+  content: "";
+  position: absolute;
+  top: 30%; left: 50%;
+  transform: translateX(-50%);
+  width: 220px; height: 220px;
+  background: #F3E8FF; /* 라일락 */
+  filter: blur(60px);
+  opacity: 0.5;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ===== Hero ===== */
+.headline {
+  text-align: center;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* ✅ 노란 하이라이트만 사용 (중복 .highlight 정리) */
+.highlight {
+  background: #ffeb3b;
+  padding: 0 8px;
+}
+
+.subhead {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin: 16px 0 24px;
+}
+
+/* 버튼 기본 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* CTA 영역 전용(그라데이션 코랄→옐로) */
+.ctas a.primary {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(255, 121, 104, 0.25);
+}
+.ctas a.secondary {
+  background: #fff;
+  border-color: var(--gray-alpha-200);
+}
+
+/* 범용 버튼(페이지 다른 곳에서 쓸 때) */
+.primary { background: #2196f3; color: #fff; }
+.primary:hover { background: #1976d2; }
+.secondary { background: #ff7968; color: #fff; }
+.secondary:hover { background: #e86554; }
+
+/* Steps */
+.stepNum {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: #fff;
+}
+
+/* 일러스트 박스 데모 */
+.illustration { margin-top: 40px; text-align: center; }
+.fakeImage {
+  width: 100%;
+  max-width: 600px;
+  height: 260px;
+  background: linear-gradient(135deg, #ffeb3b33, #2196f333);
+  border-radius: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: #888; font-size: 20px;
+}
+
+/* 다크 모드 보정 */
+@media (prefers-color-scheme: dark) {
+  .card,
+  .steps li { background: rgba(255,255,255,0.06); }
+  .badges li { background: rgba(255,255,255,0.1); }
+}
+
+.footer {
+  grid-row-start: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(var(--gray-rgb), 0.6);
+  text-align: center;
+  margin-top: 40px;
+}
+
+.footerNav {
+  display: flex;
+  gap: 16px;
+}
+
+.footerNav a {
+  color: rgba(var(--gray-rgb), 0.7);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footerNav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
