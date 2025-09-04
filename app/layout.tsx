@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-4578305115618020" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ReactQueryProvider>
           <AuthGuard>{children}</AuthGuard>
