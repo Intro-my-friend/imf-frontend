@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const PUBLIC_PATHS = ["/login"]; // 👈 여기서 관리
+const PUBLIC_PATHS = [""]; // 👈 여기서 관리
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -11,13 +11,19 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 0) 퍼블릭 페이지면 패스
+    const token = localStorage.getItem("jwt");
+
+    if (pathname === "/login" && token) {
+      router.replace("/match");
+      setLoading(false);
+      return;
+    }
+
     if (PUBLIC_PATHS.includes(pathname)) {
       setLoading(false);
       return;
     }
 
-    const token = localStorage.getItem("jwt");
     if (!token) {
       router.replace("/login");
       setLoading(false);
