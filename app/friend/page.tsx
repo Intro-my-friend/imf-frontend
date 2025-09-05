@@ -1,24 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import Footer from "@/component/Footer";
 import Header from "@/component/Header";
-import { withJwt } from "@/lib/authToken";
 import {
+  checkContactNumberApiV0ContactCheckGet,
   getContactListApiV0ContactGet,
   getContactListApiV0ContactPost,
 } from "@/lib/orval/_generated/contact";
-import { getUserApiV0UsersGet } from "@/lib/orval/_generated/user";
-import { checkPhoneExists } from "@/services/friend";
+import { CreateContactRequest } from "@/lib/orval/_generated/iMFBackend.schemas";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import $ from "./style.module.scss";
 
 export default function Friend() {
-  const router = useRouter();
   const [phone, setPhone] = useState("");
   const [modal, setModal] = useState<"none" | "exists" | "confirm">("none");
 
@@ -29,14 +25,9 @@ export default function Friend() {
     queryFn: getContactListApiV0ContactGet,
   });
 
-  const useUserInfoQuery = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: getUserApiV0UsersGet,
-    staleTime: 1000 * 60,
-  });
-
   const inviteMutation = useMutation({
-    mutationFn: getContactListApiV0ContactPost,
+    mutationFn: (params: CreateContactRequest) =>
+      getContactListApiV0ContactPost(params),
     onSuccess: () => {
       alert("초대가 완료되었습니다");
       setModal("none");
@@ -49,29 +40,10 @@ export default function Friend() {
     },
   });
 
-  useEffect(() => {
-    if (useUserInfoQuery.isSuccess) {
-      const isVerified = useUserInfoQuery.data.data.isVerified;
-      if (!isVerified) {
-        alert("인증 안된 유저!");
-        //router.push("/register/verify"); // 리다이렉트 경로 입력
-      }
-    }
-  }, [useUserInfoQuery.data, useUserInfoQuery.isSuccess, router]);
-
-  if (useUserInfoQuery.isLoading) return null;
-  if (useUserInfoQuery.isError) {
-    console.error("유저 인증 실패:", useUserInfoQuery.error);
-    router.push("/login");
-    return null;
-  }
-
   const handleCheckPhone = async () => {
-    const checkPhone = withJwt((token, params: { phone: string }) =>
-      checkPhoneExists(params.phone, token),
-    );
-
-    const result = await checkPhone({ phone: phone });
+    const result = await checkContactNumberApiV0ContactCheckGet({
+      phoneNumber: phone,
+    });
 
     if (!result.data) {
       setModal("exists");
@@ -132,7 +104,7 @@ export default function Friend() {
           <div className={$.modalBox}>
             <div className={$.modalTitle}>알림</div>
             <div className={$.modalText}>
-              {phone} 님은 이미 내친소의 회원입니다.
+              {phone} 님은 이미 아는사이의 회원입니다.
             </div>
             <button className={$.modalConfirm} onClick={() => setModal("none")}>
               확인

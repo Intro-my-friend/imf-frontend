@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
-import { ProfileInputType } from "@/app/profile/page";
-import $ from "@/app/profile/style.module.scss";
+import { ProfileInputType } from "@/app/profile/form/ProfileForm";
+import $ from "@/app/profile/form/style.module.scss";
 import { DefaultProps } from "@/type/props";
 import classNames from "classnames";
 

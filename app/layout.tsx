@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import AuthGuard from "@/component/auth/AuthGuard";
 
 import "./globals.css";
 
@@ -27,8 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-4578305115618020" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          <AuthGuard>{children}</AuthGuard>
+        </ReactQueryProvider>
       </body>
     </html>
   );

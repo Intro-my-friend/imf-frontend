@@ -42,6 +42,7 @@
         font-weight: 700;
         font-size: 16px;
       }
+      .send[disabled] { opacity: .5; cursor: not-allowed; background: #989ba2 }
     }
   }
 
@@ -51,7 +52,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #989ba2;
+    background: #ff7968;
     border-radius: 12px;
     color: white;
     width: calc(100% - 40px);
@@ -60,4 +61,30 @@
     font-weight: bold;
     border: none;
   }
+  .next[disabled] { opacity: .5; cursor: not-allowed; background: #989ba2 }
+}
+
+.countdown { margin-top: 6px; font-size: 12px; color: #ff6b6b; }
+.countdown-expired { margin-top: 6px; font-size: 12px; color: #999; }
+
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 50;
+}
+.modal {
+  position: fixed; inset: 0; display: grid; place-items: center; z-index: 60;
+}
+.modalBox {
+  width: min(360px, calc(100% - 32px));
+  background: #fff; border-radius: 16px; padding: 18px 16px 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.18);
+}
+.modalTitle { font-size: 18px; font-weight: 800; text-align: center; margin-bottom: 8px; }
+.modalText  { text-align: center; color: #6b6b6b; line-height: 1.5; }
+.modalActions { display: grid; grid-auto-flow: column; gap: 10px; margin-top: 16px; }
+.modalConfirm {
+  height: 44px; border: 0; border-radius: 10px; font-weight: 700; color: #fff;
+  background: #ff6b6b;
+}
+.modalCancel  {
+  height: 44px; border: 0; border-radius: 10px; font-weight: 700; background: #f2f2f2;
 }

@@ -1,0 +1,125 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  color: #333;
+}
+
+.header {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  padding: 3rem 1rem 1rem;
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    margin-top: 1rem;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    color: #666;
+  }
+}
+
+.main {
+  width: 100%;
+  max-width: 480px;
+  padding: 0 1.5rem;
+  text-align: center;
+  flex: 1;
+
+  .desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+
+    .highlight {
+      font-weight: 600;
+      color: #111;
+    }
+  }
+
+  .featureBox {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: #f9fafb;
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: #555;
+    text-align: left;
+
+    p + p {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  max-width: 480px;
+  padding: 2rem 1.5rem;
+
+  .ctaButton {
+    width: 100%;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+    background: #ff7968;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #ff7968;
+    }
+  }
+
+  .note {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #888;
+    text-align: center;
+  }
+}
+
+.priceSection {
+  margin-top: 2rem;
+  text-align: center;
+
+  .priceLabel {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  .originalPrice {
+    font-size: 1.1rem;
+    color: #999;
+    text-decoration: line-through; // 취소선
+    margin-right: 0.75rem;
+  }
+
+  .currentPrice {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff7968;
+  }
+
+  .badge {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background: #fef3f8;
+    color: #ff7968;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+  }
+}

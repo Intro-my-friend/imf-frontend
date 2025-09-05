@@ -1,0 +1,215 @@
+.profile {
+  .progress-bar {
+    height: 8px;
+    border-radius: 50px;
+    background: #ff9877;
+
+    &.step-1 {
+      width: 25%;
+    }
+  }
+
+  .input-wrapper {
+    padding: 32px 20px;
+  }
+
+  .sub-title {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2e2f33;
+
+    .required {
+      color: #ff7968;
+    }
+  }
+
+  .name,
+  .height,
+  .job {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .user-input {
+    margin-bottom: 32px;
+  }
+
+  .gender {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 3px;
+    background: #70737c14;
+
+    .male,
+    .female {
+      padding: 9.5px 9px;
+      flex: 1;
+      text-align: center;
+
+      &.active {
+        background: white;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .inputWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    .user-input {
+      width: 100%;
+      padding-right: 40px;
+      box-sizing: border-box;
+    }
+
+    .suffix {
+      position: absolute;
+      top: 20px;
+      right: 12px;
+      transform: translateY(-50%);
+      color: #808080;
+      pointer-events: none;
+      font-size: 16px;
+      user-select: none;
+    }
+  }
+}
+
+ /* 선택 섹션 래퍼: 위/아래 여백을 필수 입력과 동일하게 */
+ .optional-section {
+  margin-top: 16px;
+}
+
+.optional-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+/* 라벨을 .sub-title과 동일 톤으로 */
+.optional-title {
+  font-weight: 600;
+  color: #2e2f33;
+  margin-bottom: 0;
+}
+
+/* + 항목 추가 버튼 */
+.add-btn {
+  height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 12px;
+  background: #ff9877;
+  color: #fff;
+  font-weight: 700;
+  &:disabled { opacity: .5; }
+}
+
+/* 추가된 항목 리스트: 입력창과 같은 규격/톤 */
+.optional-list {
+  display: grid;
+  gap: 12px;
+  margin: 10px 0 32px; /* 아래 간격을 필수 입력과 맞춤 */
+}
+.optional-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;             /* ⬅ input과 동일 높이 */
+  padding: 12px;                 /* ⬅ input padding */
+  background: #fff;              /* ⬅ input 배경 */
+  border: 1px solid #e0e0e0;     /* ⬅ input 테두리 */
+  border-radius: 12px;           /* ⬅ input 라운드 */
+}
+.kv { display: flex; gap: 8px; align-items: baseline; }
+.k { font-weight: 600; color: #2e2f33; }
+.v { color: #70737c; }
+
+.remove-btn {
+  margin-left: 12px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff0f0;
+  color: #ff7968;
+  font-weight: 700;
+}
+
+/* Adder 영역도 인풋 규격에 맞춤 */
+.adder {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: #fff;
+}
+.adder-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 10px;
+}
+.select,
+.text {
+  height: 48px;                 /* ⬅ input과 동일 */
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 흡연 토글도 동일 높이/라운드 */
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg-btn {
+  height: 48px;                 /* ⬅ input과 동일 */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  font-weight: 600;
+  &.active {
+    background: #fffbf9;
+    border-color: #ff9877;
+    color: #ff6b6b;
+  }
+}
+
+.adder-actions {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+.cancel {
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: #f0f0f0;
+  font-weight: 700;
+}
+.confirm {
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: #ff6b6b;
+  color: #fff;
+  font-weight: 700;
+  &:disabled { opacity: .5; }
+}
+
+/* style.module.scss */
+.nextBtn {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: #ff6b6b;
+}

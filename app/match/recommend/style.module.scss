@@ -1,0 +1,130 @@
+/* ===== Page ===== */
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
+  background: #f8fafc; /* 리스트 배경 살짝 밝게 */
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 12px 16px 28px;
+}
+
+.localHeader {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 12px;
+  background: transparent;
+  border: none;
+}
+.backBtn {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; margin: 0;
+  background: transparent; border: none; color: #111827; box-shadow: none;
+}
+.backBtn:hover, .backBtn:active, .backBtn:focus {
+  background: transparent; border: none; outline: none; box-shadow: none;
+}
+.localTitle { font-weight: 700; font-size: 16px; color: #111827; }
+
+/* ===== 상단 안내 카드 ===== */
+.tipBox {
+  background: #fff7f5;
+  border-radius: 16px;
+  padding: 24px 20px;           /* 살짝 여백 업 */
+  margin: 8px 0 16px;
+  text-align: center;
+}
+.tipBoxHero {
+  min-height: 15vh;                 /* 화면 높이 80% */
+  display: flex;                    /* ✅ flex로 변경 */
+  flex-direction: column;
+  justify-content: center;          /* 수직 중앙 */
+  align-items: center;              /* 수평 중앙 */
+  gap: 10px;                        /* 제목/본문 간격 */
+}
+
+/* 제목/본문 글씨 키우기 */
+.tipTitle {
+  color: #ff7a70;
+  font-weight: 600;
+  font-size: clamp(22px, 6vw, 28px);  /* ✅ 크게 */
+  line-height: 1.2;
+}
+
+.tipSub {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: clamp(15px, 4.2vw, 18px); /* ✅ 크게 */
+  line-height: 1.6;
+}
+
+/* ===== 리스트 ===== */
+.list {
+  display: grid;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 카드 */
+.card {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 1px 6px rgba(17, 24, 39, 0.06);
+  transition: transform .05s ease-in-out;
+}
+.card:active { transform: translateY(1px); }
+
+/* 썸네일 */
+.thumb { position: relative; background: #f3f4f6; }
+.thumb img {
+  width: 100%; height: auto; display: block;
+  aspect-ratio: 13 / 10;         /* 안정적 높이 */
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 하단 그라데이션 + 캡션(좌하단) */
+.grad {
+  position: absolute; inset: auto 0 0 0; height: 44%;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 100%);
+}
+.caption {
+  position: absolute; left: 12px; bottom: 10px;
+  color: #fff; font-weight: 800; font-size: 18px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* ===== 에러/스켈레톤 ===== */
+.errorBox { text-align: center; padding: 24px 8px; }
+.errorTitle { font-weight: 800; color: #111827; }
+.errorSub { margin-top: 4px; color: #6b7280; font-size: 13px; }
+.retryBtn {
+  margin-top: 12px; border: 1px solid #e5e7eb; background: #fff;
+  padding: 8px 12px; border-radius: 10px; font-weight: 700;
+}
+
+/* 스켈레톤 */
+.skeleton { position: relative; height: 180px; border-radius: 16px; overflow: hidden; background: #e5e7eb; }
+.skeleton::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.7) 50%, rgba(255,255,255,0) 100%);
+  transform: translateX(-100%); animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }

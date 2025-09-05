@@ -14,7 +14,7 @@ export default function AuthCallback() {
 
     if (code && state) {
       fetch(
-        `http://15.164.39.230:8000/api/v0/auth/kakao/callback?code=${code}&state=${state}`,
+        `https://api.anunsai.com/api/v0/auth/kakao/callback?code=${code}&state=${state}`,
       )
         .then((res) => {
           if (!res.ok) throw new Error("API 오류");
@@ -22,11 +22,16 @@ export default function AuthCallback() {
         })
         .then((data) => {
           const token = data.data.token;
+          const isVerify = data.data.isVerify;
           if (token) {
             localStorage.setItem("jwt", token);
-            router.replace("/");
+            if (isVerify) {
+              router.replace("/match");
+            } else {
+              router.replace("/register");
+            }
           } else {
-            router.replace("/register");
+            router.replace("/login");
           }
         })
         .catch(() => {
