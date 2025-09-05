@@ -1,12 +1,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent-1: #FF7968;   /* 코랄 */
+  --accent-2: #FFD966;   /* 옐로 */
+  --accent-3: #6EC6FF;   /* 블루 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --accent-1: #FF7968;   /* 코랄 */
+    --accent-2: #FFD966;   /* 옐로 */
+    --accent-3: #6EC6FF;   /* 블루 */
   }
 }
 

@@ -167,13 +167,6 @@ a.secondary {
   }
 }
 
-/* 전역 포인트 컬러 */
-:root {
-  --accent-1: #FF7968;   /* 코랄 */
-  --accent-2: #FFD966;   /* 옐로 */
-  --accent-3: #6EC6FF;   /* 블루 */
-}
-
 /* 배경 블롭: 섹션 안에서만 보이게 함 */
 .page { position: relative; }   /* 추가 */
 .main { position: relative; }   /* 추가 */
