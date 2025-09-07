@@ -1,13 +1,10 @@
 "use client";
 
+import NicepayButton from "@/component/Payments/NicepayButton";
+
 import $ from "./page.module.scss";
 
 export default function PaymentIntroPage() {
-  const handlePayment = () => {
-    // PG사 SDK 호출 연결
-    alert("PG사 결제 SDK 호출");
-  };
-
   return (
     <div className={$.page}>
       {/* Hero */}
@@ -47,9 +44,12 @@ export default function PaymentIntroPage() {
 
       {/* CTA */}
       <footer className={$.footer}>
-        <button onClick={handlePayment} className={$.ctaButton}>
-          결제하고 시작하기
-        </button>
+        <NicepayButton
+          method="card"
+          productCode="membership_basic"
+          returnUrl="https://api.anunsai.com/api/v0/payments/nice/callback"
+          className={`${$.btn} ${$.ctaButton}`}
+        />
         <p className={$.note}>결제를 완료하셔야 서비스를 이용하실 수 있습니다.</p>
       </footer>
     </div>
