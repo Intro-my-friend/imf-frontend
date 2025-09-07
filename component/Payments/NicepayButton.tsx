@@ -38,6 +38,7 @@ type NicepayButtonProps = {
   intentApiPath?: string;
   /** 버튼 라벨 / 클래스 */
   label?: string;
+  quantity?: number;
   className?: string;
   /** intent 생성 시 서버로 보낼 추가 데이터(선택) */
   extraPayload?: Record<string, any>;
@@ -48,7 +49,7 @@ type NicepayButtonProps = {
 };
 
 const runIntent = withJwt<IntentParams, Promise<PaymentIntentData>>(
-  (jwt, p) => createPaymentIntent(p.key, p.productCode, p.method, jwt, p.extraPayload)
+  (jwt, p) => createPaymentIntent(p.key, p.productCode, p.method, jwt, p.quantity, p.extraPayload)
 );
 
 export default function NicepayButton({
@@ -58,6 +59,7 @@ export default function NicepayButton({
   returnUrl,
   label = "결제하기",
   className,
+  quantity = 1,
   extraPayload,
   onBeforeOpen,
   onError,
@@ -102,7 +104,7 @@ export default function NicepayButton({
 
   const handleClick = () => {
     const key = buildIdemKey(productCode, "subscription"); // or "consumable"
-    mutation.mutate({ key, productCode, method, extraPayload });
+    mutation.mutate({ key, productCode, method, quantity, extraPayload });
   };
 
   return (

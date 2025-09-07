@@ -14,6 +14,7 @@ export type IntentParams = {
   key: string;
   productCode: string;
   method: string;
+  quantity: number;
   extraPayload?: Record<string, unknown>;
 };
 
@@ -24,6 +25,7 @@ export async function createPaymentIntent(
   productCode: string,
   method: string,
   token: string,
+  quantity: number,
   extraPayload: Extra = {},
 ): Promise<PaymentIntentData> {
   const res = await fetch(`https://api.anunsai.com/api/v0/payments/intent`, {
@@ -33,7 +35,7 @@ export async function createPaymentIntent(
       "Idempotency-Key": key,
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ productCode, method, ...extraPayload }),
+    body: JSON.stringify({ productCode, method, quantity, ...extraPayload }),
   });
 
   if (!res.ok) {

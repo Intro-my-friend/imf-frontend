@@ -40,9 +40,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         if (!data.data.isVerified) {
           router.replace("/register");
         } 
-        // else if (!data.data.isPayment) {
-        //   router.replace("/subscribe");
-        // }
+        else if (!data.data.isSubscribe) {
+          router.replace("/subscribe");
+        }
       } catch {
         router.replace("/login");
       } finally {
