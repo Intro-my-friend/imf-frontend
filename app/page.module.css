@@ -444,13 +444,11 @@ a.secondary {
 
 .networkContent {
   display: grid;
-  grid-template-columns: 1fr;
   gap: 16px;
 }
 
 @media (min-width: 880px) {
   .networkContent {
-    grid-template-columns: 1fr 1fr; /* 이미지 / 설명 2열 */
     align-items: center;
   }
 }
@@ -464,6 +462,8 @@ a.secondary {
   background: linear-gradient(135deg, #fff0ee, #ecfeff);
   box-shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
+.networkImageWrap,
+.networkContent > small { grid-column: 1 / -1; justify-self: center; }
 
 .networkImage { object-fit: contain; }
 
@@ -494,4 +494,10 @@ a.secondary {
   color: #555;
   line-height: 1.55;
   font-size: 14px;
+}
+
+@media (min-width: 720px) {
+  .networkList {
+    grid-template-columns: 1fr 1fr;   /* 데스크톱 2열 */
+  }
 }

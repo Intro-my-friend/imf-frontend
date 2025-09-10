@@ -31,7 +31,7 @@ export default function Home() {
           <div className={styles.networkContent}>
             <div className={styles.networkImageWrap}>
               <Image
-                src="/how-to-imf.png"           // ← /public 에 넣어두세요
+                src="/how-to-imf.png"
                 alt="지인이 지인을 초대해 확장되는 네트워크 일러스트"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
