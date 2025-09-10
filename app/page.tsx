@@ -87,7 +87,7 @@ export default function Home() {
             </li>
 
             <li className={styles.reasonItem}>
-              <span className={styles.num}>3</span>
+              <span className={styles.num}>4</span>
               <div>
                 <strong>안전한 개인정보</strong>
                 <p>그룹 내의 멤버만 내 사진과 정보를 확인할 수 있어요.</p>
