@@ -55,7 +55,7 @@ const runIntent = withJwt<IntentParams, Promise<PaymentIntentData>>(
 );
 
 export default function NicepayButton({
-  clientId = "S2_b616469883b9446bbda358aa2ef7cdd3",
+  clientId = `${process.env.NEXT_PUBLIC_NICEPAY_CLIENT_KEY}`,
   method = "card",
   productCode,
   returnUrl = `${API_BASE}/api/v0/payments/nice/callback`,
