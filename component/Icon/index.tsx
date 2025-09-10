@@ -10,6 +10,7 @@ import logout from "../assets/logout.svg";
 import pencil from "../assets/pencil.svg";
 import request from "../assets/request.svg";
 import coffee from "../assets/coffee.svg";
+import notice from "../assets/notice.svg";
 
 export const iconTypes = {
   heart,
@@ -21,6 +22,7 @@ export const iconTypes = {
   pencil,
   request,
   coffee,
+  notice,
 };
 
 export type IconProps = {

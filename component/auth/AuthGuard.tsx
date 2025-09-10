@@ -13,12 +13,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
 
-    if (pathname === "/login" && token) {
-      router.replace("/match");
-      setLoading(false);
-      return;
-    }
-
     if (PUBLIC_PATHS.includes(pathname)) {
       setLoading(false);
       return;
@@ -42,6 +36,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         } 
         else if (!data.data.isSubscribe) {
           router.replace("/subscribe");
+        } 
+        else if (pathname === "/login") {
+          router.replace("/match");
         }
       } catch {
         router.replace("/login");

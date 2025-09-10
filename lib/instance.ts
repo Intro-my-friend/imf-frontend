@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-const API_BASE_URL = "http://15.164.39.230:8000";
+const API_BASE_URL = "https://api.anunsai.com";
 
 const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   if (typeof window !== "undefined") {

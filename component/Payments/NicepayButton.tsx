@@ -33,11 +33,11 @@ type NicepayButtonProps = {
   /** 🔒 백엔드 상품 카탈로그의 키(상수): ex) "membership_basic_1m" */
   productCode: string;
   /** 백엔드 콜백 URL (returnUrl) */
-  returnUrl: string;
+  returnUrl?: string;
   /** intent 생성 API 경로 */
   intentApiPath?: string;
   /** 버튼 라벨 / 클래스 */
-  label?: string;
+  label?: React.ReactNode;
   quantity?: number;
   className?: string;
   /** intent 생성 시 서버로 보낼 추가 데이터(선택) */
@@ -56,11 +56,12 @@ export default function NicepayButton({
   clientId = "S2_b616469883b9446bbda358aa2ef7cdd3",
   method = "card",
   productCode,
-  returnUrl,
+  returnUrl = "https://api.anunsai.com/api/v0/payments/nice/callback",
   label = "결제하기",
   className,
   quantity = 1,
   extraPayload,
+  idemScope = "subscription",
   onBeforeOpen,
   onError,
 }: NicepayButtonProps) {
@@ -103,7 +104,7 @@ export default function NicepayButton({
   const disabled = useMemo(() => mutation.isPending || !ready, [mutation.isPending, ready]);
 
   const handleClick = () => {
-    const key = buildIdemKey(productCode, "subscription"); // or "consumable"
+    const key = buildIdemKey(productCode, idemScope);
     mutation.mutate({ key, productCode, method, quantity, extraPayload });
   };
 

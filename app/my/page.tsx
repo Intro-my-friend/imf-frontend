@@ -110,6 +110,10 @@ export default function My() {
     router.push("/my/profile/photos")
   }
 
+  const buyTicket = () => {
+    router.push("/shop")
+  }
+
   const logout = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -193,7 +197,7 @@ export default function My() {
           <button
             className={$.ticketChargeBtn}
             aria-label="티켓 충전하기"
-            disabled={true}
+            onClick={buyTicket}
           >
             충전
           </button>
