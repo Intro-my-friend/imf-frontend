@@ -112,7 +112,7 @@ export default function Home() {
       <footer className={styles.footer}>
         <p>© 2025 아는 사이. All rights reserved.</p>
         <nav className={styles.footerNav}>
-          {/* <a href="mailto:hello@anunsai.com">문의하기</a> */}
+          <a href="mailto:hello@anunsai.com">문의하기</a>
           <a href="/privacy">개인정보 처리방침</a>
           <a href="/terms">이용약관</a>
         </nav>

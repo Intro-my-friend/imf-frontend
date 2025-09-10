@@ -28,15 +28,10 @@ export const metadata: Metadata = {
     description: "초대로만 가입하는 신뢰 기반 지인 소개팅.",
     siteName: "아는 사이",
     locale: "ko_KR",
-    // images: [
-    //   {
-    //     url: "/og.png",
-    //     width: 1200,
-    //     height: 630,
-    //     alt: "아는 사이 - 지인 기반 소개팅",
-    //   },
-    // ],
   },
+  icons: {
+    icon: "/favicon.ico",
+  }
 };
 
 export default function RootLayout({
