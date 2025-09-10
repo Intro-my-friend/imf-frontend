@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const PUBLIC_PATHS = ["/"]; // 👈 여기서 관리
+const PUBLIC_PATHS = ["/", "/privacy", "/terms"]; // 👈 여기서 관리
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
