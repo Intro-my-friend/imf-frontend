@@ -4,6 +4,9 @@
   --accent-1: #FF7968;   /* 코랄 */
   --accent-2: #FFD966;   /* 옐로 */
   --accent-3: #6EC6FF;   /* 블루 */
+  --line: #eee;
+  --muted: #8a8d93;
+  --ink: #2e2f33;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +16,9 @@
     --accent-1: #FF7968;   /* 코랄 */
     --accent-2: #FFD966;   /* 옐로 */
     --accent-3: #6EC6FF;   /* 블루 */
+    --line: #2a2a2a;   /* 다크에서 살짝 진하게 */
+    --muted: #9aa0a6;
+    --ink: #2e2f33;
   }
 }
 
