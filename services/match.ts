@@ -1,3 +1,11 @@
+import { http } from "./http";
+
+export interface MatchListRes {
+  code: number;
+  message: string;
+  data: MatchListItem[];
+}
+
 export interface UserInfo {
   isVerified: boolean;
   displayList: boolean;      // false면 주선자 모드
@@ -14,41 +22,28 @@ export const MatchTypeLabel: Record<MatchType, string> = {
   SENT: "보낸 호감",
 };
 
-// 리스트 아이템 (요청한 스펙 그대로)
 export interface MatchListItem {
   matchId: number;
   user: {
-    profileImage?: string; // 서버 스펙 그대로(오타 포함)
+    profileImage?: string; // 서버 스펙 그대로
     birth?: string;        // "YYYYMMDD"
     job?: string;
   };
   createdAt: string;       // ISO datetime
 }
 
-export interface MatchListRes {
-  code: number;
-  message: string;
-  data: MatchListItem[];
-}
-
 export async function fetchMatchList(
   token: string,
   type: MatchType
 ): Promise<MatchListRes> {
-  const res = await fetch(
-    `https://api.anunsai.com/api/v0/match?type=${type}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!res.ok) {
-    const txt = await res.text().catch(() => "");
-    throw new Error(txt || "매칭 리스트 요청 실패");
+  // 런타임 가드(예상치 못한 문자열 방지)
+  const allow = ["MATCH", "RECEIVED", "SENT"] as const;
+  if (!allow.includes(type)) {
+    throw new Error(`Invalid match type: ${type}`);
   }
-  return res.json();
+
+  const url = http.joinUrl("api/v0/match", { type });
+  return http.apiFetch<MatchListRes>(url, {
+    headers: http.authHeaders(token),
+  });
 }

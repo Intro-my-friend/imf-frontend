@@ -2,9 +2,11 @@
 
 import $ from "./page.module.scss";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
 export default function Login() {
   const handleSocialLogin = (provider: "kakao" | "naver") => {
-    window.location.href = `https://api.anunsai.com/api/v0/auth/${provider}/login`;
+    window.location.href = `${API_BASE}/api/v0/auth/${provider}/login`;
   };
 
   return (

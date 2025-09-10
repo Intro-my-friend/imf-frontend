@@ -4,6 +4,8 @@ import { useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
 export default function AuthCallback() {
   const router = useRouter();
 
@@ -14,7 +16,7 @@ export default function AuthCallback() {
 
     if (code && state) {
       fetch(
-        `https://api.anunsai.com/api/v0/auth/kakao/callback?code=${code}&state=${state}`,
+        `${API_BASE}/api/v0/auth/kakao/callback?code=${code}&state=${state}`,
       )
         .then((res) => {
           if (!res.ok) throw new Error("API 오류");

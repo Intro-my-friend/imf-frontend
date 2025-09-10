@@ -9,6 +9,8 @@ import type { PaymentIntentData, IntentParams } from "@/services/payment";
 import { buildIdemKey } from "@/lib/idempotency";
 import { withJwt } from "@/lib/authToken";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
+
 declare global {
   interface Window {
     AUTHNICE?: {
@@ -56,7 +58,7 @@ export default function NicepayButton({
   clientId = "S2_b616469883b9446bbda358aa2ef7cdd3",
   method = "card",
   productCode,
-  returnUrl = "https://api.anunsai.com/api/v0/payments/nice/callback",
+  returnUrl = `${API_BASE}/api/v0/payments/nice/callback`,
   label = "결제하기",
   className,
   quantity = 1,

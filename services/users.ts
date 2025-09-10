@@ -1,3 +1,5 @@
+import { http } from "./http";
+
 export type CodesRes = { code: number; message: string; data: { status: boolean; deadline?: string } };
 export type VerifyRes = { code: number; message: string; data: { status: boolean } };
 
@@ -5,19 +7,12 @@ export async function fetchUserVerificationCodes(
   phoneNumber: string,
   token: string,
 ): Promise<CodesRes> {
-  const res = await fetch(`https://api.anunsai.com/api/v0/users/verification-codes`, {
+  const url = http.joinUrl("api/v0/users/verification-codes");
+  return http.apiFetch<CodesRes>(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: http.authHeaders(token),
     body: JSON.stringify({ phoneNumber }),
   });
-  if (!res.ok) {
-    const txt = await res.text().catch(() => "");
-    throw new Error(txt || "인증번호 발송 실패");
-  }
-  return res.json() as Promise<CodesRes>;
 }
 
 export async function fetchUserVerification(
@@ -25,19 +20,12 @@ export async function fetchUserVerification(
   verificationNumber: string,
   token: string,
 ): Promise<VerifyRes> {
-  const res = await fetch(`https://api.anunsai.com/api/v0/users/verification`, {
+  const url = http.joinUrl("api/v0/users/verification");
+  return http.apiFetch<VerifyRes>(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: http.authHeaders(token),
     body: JSON.stringify({ phoneNumber, verificationNumber }),
   });
-  if (!res.ok) {
-    const txt = await res.text().catch(() => "");
-    throw new Error(txt || "인증 실패");
-  }
-  return res.json() as Promise<VerifyRes>;
 }
 
 export async function fetchUserRegister(
@@ -46,23 +34,12 @@ export async function fetchUserRegister(
   phoneNumber: string,
   token: string,
 ) {
-  const response = await fetch(
-    "https://api.anunsai.com/api/v0/users/signup",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ introduction, phoneNumber, verificationNumber }),
-    },
-  );
-  if (!response.ok) {
-    // 서버에서 에러 메시지 본문을 받고 싶으면:
-    const msg = await response.text();
-    throw new Error(msg);
-  }
-  return response.json();
+  const url = http.joinUrl("api/v0/users/signup");
+  return http.apiFetch(url, {
+    method: "POST",
+    headers: http.authHeaders(token),
+    body: JSON.stringify({ introduction, phoneNumber, verificationNumber }),
+  });
 }
 
 type UploadImageDTO = {
@@ -99,15 +76,26 @@ export async function uploadUserImage(file: File, token: string): Promise<UserIm
   const form = new FormData();
   form.append("file", file);
 
-  const res = await fetch("https://api.anunsai.com/api/v0/users/images", {
+  const url = http.joinUrl("api/v0/users/images");
+  const res = await fetch(url, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: form,
   });
-  const text = await res.text();
-  if (!res.ok) throw new Error(parseErrText(text));
 
-  const j = JSON.parse(text) as UploadImageDTO;
+  if (!res.ok) {
+    let msg = "업로드 실패";
+    try {
+      const j = await res.json();
+      msg = j?.message || j?.detail || msg;
+    } catch {
+      const t = await res.text().catch(() => "");
+      if (t) msg = t;
+    }
+    throw new Error(msg);
+  }
+
+  const j = (await res.json()) as UploadImageDTO;
   return {
     imageId: j.data.profileImgId,
     url: j.data.profileImgUrl,
@@ -117,14 +105,10 @@ export async function uploadUserImage(file: File, token: string): Promise<UserIm
 }
 
 export async function getUserImages(token: string): Promise<UserImagesCache> {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/images", {
-    method: "GET",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+  const url = http.joinUrl("api/v0/users/images");
+  const j = await http.apiFetch<ImageListDTO>(url, {
+    headers: http.authHeaders(token),
   });
-  const text = await res.text();
-  if (!res.ok) throw new Error(parseErrText(text));
-
-  const j = JSON.parse(text) as ImageListDTO;
   return {
     code: j.code,
     message: j.message,
@@ -138,50 +122,24 @@ export async function getUserImages(token: string): Promise<UserImagesCache> {
 }
 
 export async function deleteUserImage(imageId: number | string, token: string) {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/images", {
+  const url = http.joinUrl("api/v0/users/images");
+  return http.apiFetch(url, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    headers: http.authHeaders(token),
     body: JSON.stringify({ profileImgId: imageId }),
   });
-  const text = await res.text();
-  if (!res.ok) throw new Error(parseErrText(text));
-  return JSON.parse(text);
 }
 
-function parseErrText(text: string) {
-  try {
-    const j = JSON.parse(text);
-    return j?.detail || j?.message || text || "요청 실패";
-  } catch {
-    return text || "요청 실패";
-  }
-}
-
-
-// 대표(썸네일) 이미지 설정
 export async function setUserMainImage(
   imageId: number | string,
   token: string
 ): Promise<{ code: number; message: string }> {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/images", {
+  const url = http.joinUrl("api/v0/users/images");
+  return http.apiFetch<{ code: number; message: string }>(url, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ profileImgId: imageId }), // 서버 스펙에 맞게 key 유지
+    headers: http.authHeaders(token),
+    body: JSON.stringify({ profileImgId: imageId }),
   });
-
-  const text = await res.text().catch(() => "");
-  if (!res.ok) {
-    try {
-      const j = JSON.parse(text);
-      throw new Error(j?.detail || j?.message || text || "대표 이미지 설정 실패");
-    } catch {
-      throw new Error(text || "대표 이미지 설정 실패");
-    }
-  }
-  return text ? JSON.parse(text) : { code: 200, message: "ok" };
 }
 
 
@@ -196,25 +154,12 @@ export async function saveUserContact(
   body: SaveContactBody,
   token: string
 ): Promise<{ code: number; message: string }> {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/contact", {
+  const url = http.joinUrl("api/v0/users/contact");
+  return http.apiFetch<{ code: number; message: string }>(url, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: http.authHeaders(token),
     body: JSON.stringify(body),
   });
-
-  const text = await res.text().catch(() => "");
-  if (!res.ok) {
-    try {
-      const j = JSON.parse(text);
-      throw new Error(j?.detail || j?.message || text || "연락처 저장 실패");
-    } catch {
-      throw new Error(text || "연락처 저장 실패");
-    }
-  }
-  return text ? JSON.parse(text) : { code: 200, message: "ok" };
 }
 
 export interface UserContactRes {
@@ -228,23 +173,10 @@ export interface UserContactRes {
 
 // GET: 연락처 조회
 export async function getUserContact(token: string): Promise<UserContactRes> {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/contact", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+  const url = http.joinUrl("api/v0/users/contact");
+  return http.apiFetch<UserContactRes>(url, {
+    headers: http.authHeaders(token),
   });
-  const text = await res.text().catch(() => "");
-  if (!res.ok) {
-    try {
-      const j = JSON.parse(text);
-      throw new Error(j?.detail || j?.message || text || "연락처 조회 실패");
-    } catch {
-      throw new Error(text || "연락처 조회 실패");
-    }
-  }
-  return text ? JSON.parse(text) : { code: 200, message: "ok", data: null };
 }
 
 // --- 타입 ---
@@ -280,37 +212,28 @@ export type ProfileDetailRes = {
   } | null;
 };
 
-// --- 생성(POST) ---
 export async function createUserProfile(body: ProfileCreateBody, token: string) {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/profile", {
+  const url = http.joinUrl("api/v0/users/profile");
+  return http.apiFetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    headers: http.authHeaders(token),
     body: JSON.stringify(body),
   });
-  const text = await res.text().catch(() => "");
-  if (!res.ok) throw new Error(parseErrText(text));
-  return text ? JSON.parse(text) : { code: 200, message: "ok" };
 }
 
-// --- 수정(PATCH) ---
 export async function updateUserProfile(body: Partial<ProfileCreateBody>, token: string) {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/profile", {
+  const url = http.joinUrl("api/v0/users/profile");
+  return http.apiFetch(url, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    body: JSON.stringify(body), // 전체/부분 모두 허용. 필요 시 diff만 보낼 수도 있음
+    headers: http.authHeaders(token),
+    body: JSON.stringify(body),
   });
-  const text = await res.text().catch(() => "");
-  if (!res.ok) throw new Error(parseErrText(text));
-  return text ? JSON.parse(text) : { code: 200, message: "ok" };
 }
 
-// --- 상세(GET) (수정 프리필용) ---
+/** GET /users/profile (상세) */
 export async function getUserProfileDetail(token: string): Promise<ProfileDetailRes> {
-  const res = await fetch("https://api.anunsai.com/api/v0/users/profile", {
-    method: "GET",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+  const url = http.joinUrl("api/v0/users/profile");
+  return http.apiFetch<ProfileDetailRes>(url, {
+    headers: http.authHeaders(token),
   });
-  const text = await res.text().catch(() => "");
-  if (!res.ok) throw new Error(parseErrText(text));
-  return text ? JSON.parse(text) : { code: 200, message: "ok", data: null };
 }

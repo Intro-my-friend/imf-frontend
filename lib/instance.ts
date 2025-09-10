@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-const API_BASE_URL = "https://api.anunsai.com";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   if (typeof window !== "undefined") {
@@ -22,7 +22,7 @@ const responseInterceptor = (response: AxiosResponse) => {
 
 export const api = <T>(config: AxiosRequestConfig): Promise<T> => {
   const instance = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: API_BASE,
   });
   instance.interceptors.request.use(requestInterceptor);
   instance.interceptors.response.use(responseInterceptor);

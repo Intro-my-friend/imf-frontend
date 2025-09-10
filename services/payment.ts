@@ -1,3 +1,5 @@
+import { http } from "./http";
+
 export interface PaymentIntentData {
   orderId: string;
   amount: number;
@@ -26,30 +28,13 @@ export async function createPaymentIntent(
   method: string,
   token: string,
   quantity: number,
-  extraPayload: Extra = {},
+  extraPayload: Record<string, unknown> = {},
 ): Promise<PaymentIntentData> {
-  const res = await fetch(`https://api.anunsai.com/api/v0/payments/intent`, {
+  const url = http.joinUrl("api/v0/payments/intent");
+  const json = await http.apiFetch<PaymentIntentRes>(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Idempotency-Key": key,
-      Authorization: `Bearer ${token}`,
-    },
+    headers: http.authHeaders(token, { "Idempotency-Key": key }),
     body: JSON.stringify({ productCode, method, quantity, ...extraPayload }),
   });
-
-  if (!res.ok) {
-    let msg = "요청에 실패했습니다.";
-    try {
-      const j = await res.json();
-      msg = (j?.message || j?.detail || msg) as string;
-    } catch {
-      const t = await res.text().catch(() => "");
-      if (t) msg = t;
-    }
-    throw new Error(msg);
-  }
-
-  const json: PaymentIntentRes = await res.json();
   return json.data;
 }

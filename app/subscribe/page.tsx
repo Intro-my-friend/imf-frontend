@@ -47,7 +47,6 @@ export default function PaymentIntroPage() {
         <NicepayButton
           method="card"
           productCode="membership_basic"
-          returnUrl="https://api.anunsai.com/api/v0/payments/nice/callback"
           className={`${$.btn} ${$.ctaButton}`}
         />
         <p className={$.note}>결제를 완료하셔야 서비스를 이용하실 수 있습니다.</p>

@@ -4,6 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PUBLIC_PATHS = ["/", "/privacy", "/terms"]; // 👈 여기서 관리
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
     (async () => {
       try {
-        const res = await fetch("https://api.anunsai.com/api/v0/users", {
+        const res = await fetch(`${API_BASE}/api/v0/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

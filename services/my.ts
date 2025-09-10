@@ -1,55 +1,26 @@
-export async function fetchUserInfo(
-  token: string,
-) {
-  const response = await fetch(
-    `https://api.anunsai.com/api/v0/users`, 
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+import { http } from "./http";
 
-  if (!response.ok) throw new Error("유저 정보 요청 실패");
-  return response.json();
+export async function fetchUserInfo(token: string) {
+  const url = http.joinUrl("api/v0/users");
+  return http.apiFetch(url, {
+    headers: http.authHeaders(token),
+  });
 }
 
-export async function patchPurpose(
-  introduction: boolean,
-  token: string
-) {
-  const response =  await fetch(
-    `https://api.anunsai.com/api/v0/users/matching-settings`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ introduction: introduction }),
-    }
-);
-
-  if (!response.ok) throw new Error("모드 변경 실패");
-  return response.json();
+/** PATCH /api/v0/users/matching-settings  { introduction: boolean } */
+export async function patchPurpose(introduction: boolean, token: string) {
+  const url = http.joinUrl("api/v0/users/matching-settings");
+  return http.apiFetch(url, {
+    method: "PATCH",
+    headers: http.authHeaders(token),
+    body: JSON.stringify({ introduction }),
+  });
 }
 
-export async function getUserImages(
-  token: string,
-) {
-  const response = await fetch(
-    `https://api.anunsai.com/api/v0/users/images`, 
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!response.ok) throw new Error("유저 이미지 요청 실패");
-  return response.json();
+/** GET /api/v0/users/images */
+export async function getUserImages(token: string) {
+  const url = http.joinUrl("api/v0/users/images");
+  return http.apiFetch(url, {
+    headers: http.authHeaders(token),
+  });
 }
