@@ -11,16 +11,28 @@ export default function Login() {
     <div className={$.login}>
       <div className={$["continue-wrapper"]}>
         <button
-          className={$.continue}
+          className={$["naver-btn"]}
+          type="button"
+          aria-label="네이버로 시작하기"
           onClick={() => handleSocialLogin("naver")}
         >
-          네이버로 계속하기
+          <span className={$["naver-ico"]} aria-hidden="true">
+            <img src="/naver/icon_n_white.svg" alt="" />
+          </span>
+          <span className={$["naver-label"]}>네이버로 시작하기</span>
         </button>
+
         <button
-          className={$.continue}
+          className={$["kakao-btn"]}
+          type="button"
+          aria-label="카카오 로그인"
           onClick={() => handleSocialLogin("kakao")}
         >
-          카카오로 계속하기
+          <img
+            src="/kakao/kakao_login_medium_wide.png"
+            alt="카카오 로그인"
+            decoding="async"
+          />
         </button>
       </div>
     </div>
