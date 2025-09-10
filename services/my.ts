@@ -1,6 +1,9 @@
 import { http } from "./http";
+import type { UserInfo } from "@/services/match";
 
-export async function fetchUserInfo(token: string) {
+type ApiRes<T> = { code: number; message: string; data: T };
+
+export async function fetchUserInfo(token: string): Promise<ApiRes<UserInfo>>{
   const url = http.joinUrl("api/v0/users");
   return http.apiFetch(url, {
     headers: http.authHeaders(token),
