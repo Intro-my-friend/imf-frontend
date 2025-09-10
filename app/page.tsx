@@ -87,7 +87,15 @@ export default function Home() {
             </li>
 
             <li className={styles.reasonItem}>
-              <span className={styles.num}>4</span>
+              <span className={styles.num}>3</span>
+              <div>
+                <strong>안전한 개인정보</strong>
+                <p>그룹 내의 멤버만 내 사진과 정보를 확인할 수 있어요.</p>
+              </div>
+            </li>
+
+            <li className={styles.reasonItem}>
+              <span className={styles.num}>5</span>
               <div>
                 <strong>원클릭 차단/신고(준비 중)</strong>
                 <p>신고되면 즉시 제한·심사하고, 동일 행위 반복을 시스템이 막아요.</p>
