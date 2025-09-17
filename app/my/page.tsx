@@ -186,7 +186,7 @@ export default function My() {
           </div>
         </div>
 
-        <div className={$.ticketBar} role="region" aria-label="티켓 보유량">
+        {/* <div className={$.ticketBar} role="region" aria-label="티켓 보유량">
           <div className={$.ticketLeft}>
             <Icon size={20} name={"coffee"} />
             <span className={$.ticketLabel}>보유 커피 : </span>
@@ -201,7 +201,7 @@ export default function My() {
           >
             충전
           </button>
-        </div>
+        </div> */}
 
         <div className={$.adBanner}>광고자리</div>
 
