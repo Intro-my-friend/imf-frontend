@@ -35,9 +35,9 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         if (!data.data.isVerified) {
           router.replace("/register");
         } 
-        else if (!data.data.isSubscribe) {
-          router.replace("/subscribe");
-        } 
+        // else if (!data.data.isSubscribe) {
+        //   router.replace("/subscribe");
+        // } 
         else if (pathname === "/login") {
           router.replace("/match");
         }
