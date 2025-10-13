@@ -7,6 +7,22 @@
   --line: #eee;
   --muted: #8a8d93;
   --ink: #2e2f33;
+
+  /* 추가 다크모드 대응 변수 */
+  --card-bg: #ffffff;
+  --card-border: #f0f0f0;
+  --input-bg: #f6f6f6;
+  --input-border: #e0e0e0;
+  --modal-bg: #ffffff;
+  --overlay-bg: rgba(0, 0, 0, 0.4);
+  --text-primary: #171717;
+  --text-secondary: #666666;
+  --text-muted: #8c8c8c;
+  --section-bg: #fff7f6;
+  --section-border: #ffe1dd;
+  --timer-bg: #fff7f0;
+  --timer-border: #ffd7c2;
+  --timer-text: #f06a2b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,9 +32,25 @@
     --accent-1: #FF7968;   /* 코랄 */
     --accent-2: #FFD966;   /* 옐로 */
     --accent-3: #6EC6FF;   /* 블루 */
-    --line: #2a2a2a;   /* 다크에서 살짝 진하게 */
+    --line: #2a2a2a;
     --muted: #9aa0a6;
-    --ink: #2e2f33;
+    --ink: #e5e5e5;
+
+    /* 다크모드 전용 색상 */
+    --card-bg: #1a1a1a;
+    --card-border: #2a2a2a;
+    --input-bg: #1a1a1a;
+    --input-border: #2a2a2a;
+    --modal-bg: #1a1a1a;
+    --overlay-bg: rgba(0, 0, 0, 0.7);
+    --text-primary: #ededed;
+    --text-secondary: #b0b0b0;
+    --text-muted: #808080;
+    --section-bg: rgba(255, 121, 104, 0.08);
+    --section-border: rgba(255, 121, 104, 0.2);
+    --timer-bg: rgba(255, 121, 104, 0.15);
+    --timer-border: rgba(255, 121, 104, 0.3);
+    --timer-text: #ff8a5b;
   }
 }
 

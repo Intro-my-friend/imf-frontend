@@ -2,7 +2,7 @@
   min-height: 100dvh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background: #fff;
+  background: var(--background);
 }
 
 .main {
@@ -16,9 +16,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid #ffd7c2;
-  background: #fff7f0;
-  color: #f06a2b;
+  border: 1px solid var(--timer-border);
+  background: var(--timer-bg);
+  color: var(--timer-text);
   border-radius: 999px;
   padding: 8px 12px;
   font-weight: 700;
@@ -61,7 +61,7 @@
 .divider {
   border: 0;
   height: 1px;
-  background: #f0f0f0;
+  background: var(--card-border);
   margin: 20px 0;
 }
 
@@ -69,12 +69,13 @@
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 12px;
+  color: var(--text-primary);
 }
 
 .tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  background: #f6f6f6;
+  background: var(--input-bg);
   border-radius: 12px;
   padding: 4px;
   gap: 6px;
@@ -86,10 +87,12 @@
   border: 0;
   background: transparent;
   font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
 }
 .tabActive {
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  background: var(--card-bg);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
 }
 
 .grid {
@@ -103,7 +106,8 @@
   position: relative;
   border-radius: 14px;
   overflow: hidden;
-  background: #fafafa;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
 }
 .cardImg {
   display: block;
@@ -112,7 +116,7 @@
   object-fit: cover;
 }
 .noImg {
-  background: #eee;
+  background: var(--input-bg);
 }
 
 .badge {
@@ -133,23 +137,24 @@
   gap: 6px;
   padding: 8px 10px 10px;
   font-size: 13px;
+  color: var(--text-primary);
 }
 .age { font-weight: 700; }
 .dot { opacity: .5; }
-.job { color: #666; }
+.job { color: var(--text-secondary); }
 
 .empty {
   grid-column: 1 / -1;
   text-align: center;
   padding: 28px 8px;
-  color: #8c8c8c;
+  color: var(--text-muted);
 }
 
 /* Modal */
 .modalBackdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.4);
+  background: var(--overlay-bg);
   display: grid;
   place-items: center;
   z-index: 50;
@@ -157,7 +162,7 @@
 
 .modalCard {
   width: min(360px, calc(100% - 32px));
-  background: #fff;
+  background: var(--modal-bg);
   border-radius: 16px;
   padding: 18px 16px 14px;
   box-shadow: 0 8px 24px rgba(0,0,0,.18);
@@ -168,11 +173,12 @@
   font-weight: 800;
   text-align: center;
   margin-bottom: 8px;
+  color: var(--text-primary);
 }
 
 .modalDesc {
   text-align: center;
-  color: #6b6b6b;
+  color: var(--text-secondary);
   margin-bottom: 16px;
 }
 
@@ -186,8 +192,10 @@
   height: 44px;
   border-radius: 10px;
   border: 0;
-  background: #f2f2f2;
+  background: var(--input-bg);
   font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
 }
 
 .modalPrimary {
@@ -217,13 +225,14 @@
 }
 
 .muted {
-  color: #8c8c8c;
+  color: var(--text-muted);
   font-size: 14px;
 }
 
 /* 안내 박스 */
 .noticeBox {
-  background: #fff4f1;
+  background: var(--section-bg);
+  border: 1px solid var(--section-border);
   border-radius: 12px;
   padding: 14px 16px;
   margin-top: 10px;
@@ -231,11 +240,11 @@
   text-align: left;
 }
 .noticeTitle {
-  color: #ff6b6b;
+  color: var(--accent-1);
   font-weight: 800;
   margin-bottom: 6px;
 }
 .noticeDesc {
-  color: #d46a54;
+  color: var(--text-secondary);
   line-height: 1.5;
 }

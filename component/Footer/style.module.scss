@@ -1,11 +1,11 @@
 .footer {
   display: flex;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--input-border);
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #fff;
+  background: var(--background);
   z-index: 100;
 
   .match,
@@ -17,14 +17,14 @@
     gap: 4px;
     flex-basis: 33%;
     padding: 10px 0;
-    color: #989ba2;
+    color: var(--text-muted);
     font-size: 12px;
     font-weight: 500;
 
     &.active {
-      color: #ff7968;
+      color: var(--accent-1);
       svg {
-        color: #ff7968;
+        color: var(--accent-1);
       }
     }
   }

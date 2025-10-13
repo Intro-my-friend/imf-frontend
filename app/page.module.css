@@ -227,7 +227,7 @@ a.secondary {
 .subhead {
   text-align: center;
   font-size: 18px;
-  color: #555;
+  color: var(--text-secondary);
   margin: 16px 0 24px;
 }
 
@@ -251,8 +251,9 @@ a.secondary {
   box-shadow: 0 12px 28px rgba(255, 121, 104, 0.25);
 }
 .ctas a.secondary {
-  background: #fff;
+  background: var(--card-bg);
   border-color: var(--gray-alpha-200);
+  color: var(--text-primary);
 }
 
 /* 범용 버튼(페이지 다른 곳에서 쓸 때) */
@@ -276,8 +277,19 @@ a.secondary {
 /* 다크 모드 보정 */
 @media (prefers-color-scheme: dark) {
   .card,
-  .steps li { background: rgba(255,255,255,0.06); }
-  .badges li { background: rgba(255,255,255,0.1); }
+  .steps li { background: var(--card-bg); }
+  .badges li { background: var(--input-bg); }
+
+  /* 다크모드에서 배경 블롭 색상 조정 */
+  .page::before {
+    background: rgba(255, 121, 104, 0.15);
+  }
+  .page::after {
+    background: rgba(110, 198, 255, 0.15);
+  }
+  .main::before {
+    background: rgba(255, 217, 102, 0.15);
+  }
 }
 
 .footer {
@@ -331,8 +343,8 @@ a.secondary {
   max-width: 840px;
   margin: 56px auto 24px;
   padding: 24px;
-  background: #fff7f6;               /* 코랄 톤의 아주 연한 배경 */
-  border: 1px solid #ffe1dd;
+  background: var(--section-bg);
+  border: 1px solid var(--section-border);
   border-radius: 16px;
 }
 
@@ -342,6 +354,7 @@ a.secondary {
   font-weight: 800;
   margin: 0 0 16px;
   line-height: 1.25;
+  color: var(--text-primary);
 }
 
 .reasons {
@@ -364,8 +377,8 @@ a.secondary {
   grid-template-columns: 36px 1fr;
   gap: 12px;
   align-items: start;
-  background: #ffffff;
-  border: 1px solid #f5d6d1;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 12px 14px;
 }
@@ -389,13 +402,13 @@ a.secondary {
   display: block;
   font-size: 15px;
   margin-bottom: 4px;
-  color: #222;
+  color: var(--text-primary);
 }
 
 .reasonItem p {
   margin: 0;
   font-size: 14px;
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.55;
 }
 
@@ -432,8 +445,8 @@ a.secondary {
   max-width: 980px;
   margin: 48px auto 0;
   padding: 24px;
-  background: #fff7f6;
-  border: 1px solid #ffe1dd;
+  background: var(--section-bg);
+  border: 1px solid var(--section-border);
   border-radius: 16px;
 }
 
@@ -442,6 +455,7 @@ a.secondary {
   font-size: clamp(20px, 3.8vw, 26px);
   font-weight: 800;
   margin: 0 0 18px;
+  color: var(--text-primary);
 }
 
 .networkContent {
@@ -478,8 +492,8 @@ a.secondary {
 }
 
 .networkList li {
-  background: #ffffff;
-  border: 1px solid #f5d6d1;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 12px 14px;
 }
@@ -488,12 +502,12 @@ a.secondary {
   display: block;
   font-weight: 700;
   margin-bottom: 4px;
-  color: #222;
+  color: var(--text-primary);
 }
 
 .networkList p {
   margin: 0;
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.55;
   font-size: 14px;
 }
