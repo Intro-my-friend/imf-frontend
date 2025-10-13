@@ -254,8 +254,6 @@ export default function MatchDetailPage() {
             <div className={$.modalTitle}>호감 보내기</div>
             <div className={$.modalText}>
               {payload?.name}님에게 호감을 보냅니다.
-              <br />
-              (4 coffee)
             </div>
 
             <div className={$.modalActions}>
