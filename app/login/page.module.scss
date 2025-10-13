@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background: var(--background);
 
   .continue-wrapper {
     display: flex;
@@ -16,15 +17,19 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #70737c29;
+    border: 1px solid var(--card-border);
     border-radius: 12px;
     width: 335px;
     height: 48px;
     font-weight: 600;
     font-size: 16px;
-    color: #171719;
+    color: var(--text-primary);
     cursor: pointer;
-    background: #fff;
+    background: var(--card-bg);
+
+    &:hover {
+      background: var(--input-bg);
+    }
   }
 
   /* 카카오: 공식 '완성 버튼 이미지' 사용 */

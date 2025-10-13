@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: var(--background);
 }
 
 .container {
   flex: 1;
   padding: 16px;
-  background-color: #fff;
+  background-color: var(--background);
 }
 
 .label {
@@ -15,6 +16,7 @@
   font-size: 14px;
   margin-bottom: 8px;
   display: block;
+  color: var(--text-primary);
 }
 
 .inviteBox {
@@ -29,19 +31,30 @@
 .phoneInput {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   font-size: 14px;
+  background: var(--input-bg);
+  color: var(--text-primary);
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
 }
 
 .inviteBtn {
-  background-color: #ff8a80;
+  background-color: var(--accent-1);
   color: white;
   font-weight: bold;
   border: none;
   border-radius: 8px;
   padding: 0 24px;
   font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
 .listBox {
@@ -59,6 +72,11 @@
   align-items: center;
   gap: 12px;
   padding: 8px 0;
+  border-bottom: 1px solid var(--card-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .status {
@@ -69,17 +87,19 @@
 }
 
 .invited {
-  background-color: #eee;
-  color: #888;
+  background-color: var(--input-bg);
+  color: var(--text-muted);
 }
 
 .received {
-  background-color: #ffeeee;
-  color: #ff6b6b;
+  background-color: var(--section-bg);
+  color: var(--accent-1);
+  border: 1px solid var(--section-border);
 }
 
 .phone {
   font-size: 14px;
+  color: var(--text-primary);
 }
 
 /* modal 공통 스타일 */
@@ -89,7 +109,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--overlay-bg);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,7 +117,7 @@
 }
 
 .modalBox {
-  background-color: white;
+  background-color: var(--modal-bg);
   border-radius: 12px;
   padding: 24px 20px;
   width: 80%;
@@ -110,11 +130,12 @@
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: var(--text-primary);
 }
 
 .modalText {
   font-size: 14px;
-  color: #555;
+  color: var(--text-secondary);
   margin-bottom: 20px;
   white-space: pre-wrap;
 }
@@ -126,21 +147,29 @@
 }
 
 .modalConfirm {
-  background-color: #ff6b6b;
+  background-color: var(--accent-1);
   color: white;
   border: none;
   padding: 10px 24px;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
 .modalCancel {
   background-color: transparent;
-  color: #ff6b6b;
-  border: 1px solid #ff6b6b;
+  color: var(--accent-1);
+  border: 1px solid var(--accent-1);
   padding: 10px 24px;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+
+  &:hover {
+    background-color: var(--section-bg);
+  }
 }
